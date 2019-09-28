@@ -1,6 +1,6 @@
-package main.kotlin.com.brain.ion
+package com.brain.ion
 
-import main.kotlin.com.brain.ion.Ion
+import com.brain.ion.Ion
 
 fun main() {
 	
