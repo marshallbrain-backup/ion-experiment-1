@@ -1,4 +1,4 @@
-package com.brain.ion
+package main.kotlin.com.brain.ion
 
 import java.awt.Canvas
 import javax.swing.JFrame
