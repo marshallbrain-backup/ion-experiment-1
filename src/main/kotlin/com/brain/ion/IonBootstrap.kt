@@ -1,12 +1,9 @@
-package com.brain.ion
+package main.kotlin.com.brain.ion
 
-import java.awt.Canvas
-import javax.swing.JFrame
-import java.awt.Color
-import java.awt.Graphics2D
+import main.kotlin.com.brain.ion.Ion
 
 fun main() {
-
+	
 	Ion()
 
 }
