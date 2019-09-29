@@ -4,6 +4,7 @@ import java.awt.Canvas
 import java.awt.Dimension
 import java.awt.Point
 import javax.swing.JFrame
+import javax.swing.JTextField
 
 class Frame(
 	name: String = "Ion",
@@ -14,21 +15,22 @@ class Frame(
 	decorated: Boolean = true
 ) {
 	
-	private val mainFrame = JFrame();
-	private val canvas = Canvas()
+	val frame = JFrame();
+	val canvas = Canvas()
 	
 	init {
 		
-		mainFrame.title = "Pulsar";
-		mainFrame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE;
-		mainFrame.isResizable = false;
-		mainFrame.isVisible = true;
-		mainFrame.location = Point(x, y)
+		frame.title = name
+		frame.isUndecorated = !decorated
+		frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+		frame.isResizable = false
+		frame.isVisible = true
+		frame.location = Point(x, y)
 		
 		canvas.preferredSize = Dimension(width, height)
-		mainFrame.add(canvas)
+		frame.add(canvas)
 		
-		mainFrame.pack();
+		frame.pack();
 		
 	}
 	
