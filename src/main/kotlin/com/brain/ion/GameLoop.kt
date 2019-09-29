@@ -76,13 +76,7 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 			// Is called once a second
 			if (lastUpdateTime / 1000000 - lastSecond / 1000000 >= 1000) {
 				
-				if (tps < 60 || fps < 60) {
-					
-					println("TPS - $tps")
-					println("FPS - $fps")
-					println()
-					
-				}
+				desplayUpdateInfo(tps, fps)
 				
 				tps = 0
 				fps = 0
@@ -107,5 +101,11 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		}
 		
 	}
-
+	
+	private fun desplayUpdateInfo(tps: Int, fps: Int) {
+		
+		print("TPS - $tps; FPS - $fps\r")
+		
+	}
+	
 }
