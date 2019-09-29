@@ -1,5 +1,7 @@
 package com.brain.ion
 
+import java.awt.Color
+import java.awt.Graphics2D
 import java.awt.event.WindowEvent
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
@@ -63,20 +65,20 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 			
 			while (now - lastUpdateTime > timeBetweenUpdates) {
 				
-				//tickClass.tick()
+				tick()
 				tps++
 				lastUpdateTime += timeBetweenUpdates
 				
 			}
 			
-			//renderClass.render()
+			render()
 			fps++
 			lastRenderTime = now
 			
 			// Is called once a second
 			if (lastUpdateTime / 1000000 - lastSecond / 1000000 >= 1000) {
 				
-				desplayUpdateInfo(tps, fps)
+				displayUpdateInfo(tps, fps)
 				
 				tps = 0
 				fps = 0
@@ -102,7 +104,33 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		
 	}
 	
-	private fun desplayUpdateInfo(tps: Int, fps: Int) {
+	private fun tick() {
+		
+		canvas.keyListeners
+		canvas.mouseListeners
+		canvas.mouseMotionListeners
+		canvas.mousePosition
+		canvas.mouseWheelListeners
+		
+	}
+	
+	private fun render() {
+		
+		val bs = canvas.bufferStrategy
+		val g = bs.drawGraphics as Graphics2D
+		
+		val rec = canvas.bounds
+		
+		g.color = Color.DARK_GRAY
+		g.setClip(rec.x, rec.y, rec.width, rec.height)
+		g.fillRect(rec.x, rec.y, rec.width, rec.height)
+		
+		g.dispose();
+		bs.show();
+		
+	}
+	
+	private fun displayUpdateInfo(tps: Int, fps: Int) {
 		
 		print("TPS - $tps; FPS - $fps\r")
 		
