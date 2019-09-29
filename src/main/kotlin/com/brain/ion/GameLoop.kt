@@ -46,10 +46,10 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	override fun run() {
 		
-		val TARGET_FPS: Long = 60
-		val TIME_BETWEEN_RENDERS = 1000000000 / TARGET_FPS
-		val GAME_HERTZ: Long = 60
-		val TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ
+		val targetFps: Long = 60 //TARGET_FPS
+		val timeBetweenRenders = 1000000000 / targetFps //TIME_BETWEEN_RENDERS
+		val gameHertz: Long = 60 //GAME_HERTZ
+		val timeBetweenUpdates = 1000000000 / gameHertz //TIME_BETWEEN_UPDATES
 		
 		var tps = 0
 		var fps = 0
@@ -61,11 +61,11 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 			
 			var now = System.nanoTime()
 			
-			while (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {
+			while (now - lastUpdateTime > timeBetweenUpdates) {
 				
 				//tickClass.tick()
 				tps++
-				lastUpdateTime += TIME_BETWEEN_UPDATES
+				lastUpdateTime += timeBetweenUpdates
 				
 			}
 			
@@ -91,7 +91,7 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 			}
 			
 			// Idles until a frame or game tick needs to happen
-			while (now - lastRenderTime < TIME_BETWEEN_RENDERS && now - lastUpdateTime < TIME_BETWEEN_UPDATES) {
+			while (now - lastRenderTime < timeBetweenRenders && now - lastUpdateTime < timeBetweenUpdates) {
 				
 				Thread.yield()
 				try {
