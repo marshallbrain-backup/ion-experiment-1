@@ -120,10 +120,13 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		
 		val bs = canvas.bufferStrategy
 		val g = ComGraphics(bs.drawGraphics, canvas.bounds)
+
+		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
+		val rec = Rectangle(100, 100, 500, 500, style)
+
+		g.draw(rec)
 		
-		g.render()
-		
-		bs.show();
+		bs.show()
 		
 	}
 	
