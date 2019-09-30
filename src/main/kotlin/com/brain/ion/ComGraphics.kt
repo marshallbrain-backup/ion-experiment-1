@@ -4,19 +4,24 @@ import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
 class ComGraphics(
-		private val graphics: Graphics2D,
-		bounds: Rectangle
+		val bounds: Rectangle
 ) {
-
-	val renderQueues = mutableListOf<Queue>()
 	
-	init {
+	private val renderGroups = mutableMapOf<String, Group>()
+	
+	private lateinit var graphics: Graphics2D
+	
+	fun setGraphics(g: Graphics2D) {
+		graphics = g
+		
 		graphics.color = Color.DARK_GRAY
 		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
 		graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
 	}
 	
-	constructor(g: Graphics, bounds: Rectangle) : this(g as Graphics2D, bounds)
+	fun setGraphics(g: Graphics) {
+		setGraphics(g as Graphics2D)
+	}
 
 	fun draw(vector: Vector) {
 
