@@ -1,6 +1,5 @@
 package com.brain.ion.components.vectors
 
-import com.brain.ion.components.Style
 
 class Rectangle(
 	val x: Int = 0,
