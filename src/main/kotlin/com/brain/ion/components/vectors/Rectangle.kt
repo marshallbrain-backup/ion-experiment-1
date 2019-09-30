@@ -11,10 +11,6 @@ class Rectangle(
 	override val style: Style = Style()
 ): Vector {
 
-	val shape = Rectangle(x, y, width, height)
-
-	override fun getShape(): Shape {
-		return shape
-	}
+	override val shape = Rectangle(x, y, width, height)
 
 }

@@ -8,8 +8,7 @@ import java.awt.Stroke
 interface Vector {
 
 	val style: Style
-	
-	fun getShape(): Shape
+	val shape: Shape
 	
 }
 
