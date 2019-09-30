@@ -1,5 +1,7 @@
 package com.brain.ion
 
+import com.brain.ion.components.Style
+import com.brain.ion.components.vectors.Rectangle
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.WindowEvent
@@ -117,15 +119,10 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	private fun render() {
 		
 		val bs = canvas.bufferStrategy
-		val g = bs.drawGraphics as Graphics2D
+		val g = ComGraphics(bs.drawGraphics, canvas.bounds)
 		
-		val rec = canvas.bounds
+		g.render()
 		
-		g.color = Color.DARK_GRAY
-		g.setClip(rec.x, rec.y, rec.width, rec.height)
-		g.fillRect(rec.x, rec.y, rec.width, rec.height)
-		
-		g.dispose();
 		bs.show();
 		
 	}
