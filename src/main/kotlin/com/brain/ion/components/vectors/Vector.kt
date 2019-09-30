@@ -6,17 +6,19 @@ import java.awt.Shape
 import java.awt.Stroke
 
 interface Vector {
+
+	val style: Style
 	
 	fun getShape(): Shape
 	
 }
 
 class Style(
-		strokeColorString: String = "#FFFFFF",
-		fillColorString: String = "#FFFFFF",
-		strokeOpacity: Float = 1f,
-		fillOpacity: Float = 1f,
-		strokeWidth: Int = 1
+		strokeColorString: String = "#000000",
+		fillColorString: String = "#000000",
+		strokeOpacity: Float = 0f,
+		fillOpacity: Float = 0f,
+		strokeWidth: Int = 0
 ) {
 
 	val fillColor: Color
