@@ -10,12 +10,22 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
+	private val graphics = ComGraphics(canvas.bounds)
 	
 	private var running = false
 
 	init {
 		
 		canvas.createBufferStrategy(2)
+		
+		val bs = canvas.bufferStrategy
+		graphics.setGraphics(bs.drawGraphics)
+		
+		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
+		val rec = Rectangle(100, 100, 500, 500, style)
+		
+		graphics.createRenderGroup("")
+		graphics.addToQueue("", rec)
 		
 	}
 	
@@ -118,13 +128,10 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private fun render() {
 		
-		val bs = canvas.bufferStrategy
-		val g = ComGraphics(bs.drawGraphics, canvas.bounds)
-
-		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
-		val rec = Rectangle(100, 100, 500, 500, style)
-
-		g.draw(rec)
+		var bs = canvas.bufferStrategy
+		graphics.setGraphics(bs.drawGraphics)
+		
+		graphics.render()
 		
 		bs.show()
 		
