@@ -8,11 +8,13 @@ class Rectangle(
 	private val y: Int = 0,
 	private val width: Int = 0,
 	private val height: Int = 0,
-	val style: Style = Style()
+	override val style: Style = Style()
 ): Vector {
 
+	val shape = Rectangle(x, y, width, height)
+
 	override fun getShape(): Shape {
-		return Rectangle(x, y, width, height)
+		return shape
 	}
 
 }
