@@ -1,14 +1,14 @@
 package com.brain.ion
 
-import java.awt.Color
-import java.awt.Graphics
-import java.awt.Graphics2D
-import java.awt.Rectangle
+import com.brain.ion.components.vectors.Vector
+import java.awt.*
 
 class ComGraphics(
-	val graphics: Graphics2D,
-	bounds: Rectangle
+		private val graphics: Graphics2D,
+		bounds: Rectangle
 ) {
+
+	val renderQueues = mutableListOf<Queue>()
 	
 	init {
 		graphics.color = Color.DARK_GRAY
@@ -17,9 +17,31 @@ class ComGraphics(
 	}
 	
 	constructor(g: Graphics, bounds: Rectangle) : this(g as Graphics2D, bounds)
-	
-	fun render() {
-		TODO("not implemented")
+
+	fun draw(vector: Vector) {
+
+		graphics.color = vector.style.fillColor
+		graphics.fill(vector.getShape())
+
+		graphics.color = vector.style.StrokeColor
+		graphics.stroke = vector.style.StrokeProp
+		graphics.draw(vector.getShape())
+
 	}
-	
+
+	fun createRenderGroup() {}
+
+	fun deleteRenderGroup() {}
+
+	fun getRenderGroup() {}
+
+	fun addToQueue() {}
+
+	fun removeFromQueue() {}
+
+	fun render() {}
+
+
 }
+
+class Queue {}
