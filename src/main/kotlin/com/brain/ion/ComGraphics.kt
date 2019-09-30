@@ -47,6 +47,26 @@ class ComGraphics(
 	fun render() {}
 
 
-}
+	class Group (
+			val id: String
+	) {
+		
+		private val queue = mutableListOf<Vector>()
+		
+		fun addToQueue(vectors: Array<out Vector>) {
+			queue.addAll(vectors)
+		}
+		
+		fun removeFromQueue(vectors: Array<out Vector>) {
+			queue.removeAll(vectors)
+		}
+		
+		fun render(g: ComGraphics) {
+			for (v in queue) {
+				g.draw(v)
+			}
+		}
+		
+	}
 
-class Queue {}
+}
