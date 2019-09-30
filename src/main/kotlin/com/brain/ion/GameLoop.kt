@@ -1,5 +1,7 @@
 package com.brain.ion
 
+import com.brain.ion.components.vectors.Rectangle
+import com.brain.ion.components.vectors.Style
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.WindowEvent
@@ -119,11 +121,21 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		val bs = canvas.bufferStrategy
 		val g = bs.drawGraphics as Graphics2D
 		
-		val rec = canvas.bounds
+		val bounds = canvas.bounds
 		
 		g.color = Color.DARK_GRAY
-		g.setClip(rec.x, rec.y, rec.width, rec.height)
-		g.fillRect(rec.x, rec.y, rec.width, rec.height)
+		g.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
+		g.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
+
+		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
+		val rec = Rectangle(100, 100, 500, 500, style)
+
+		g.color = rec.style.fillColor
+		g.fill(rec.getShape())
+
+		g.color = rec.style.StrokeColor
+		g.stroke = rec.style.StrokeProp
+		g.draw(rec.getShape())
 		
 		g.dispose();
 		bs.show();
