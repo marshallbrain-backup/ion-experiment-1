@@ -21,11 +21,11 @@ class ComGraphics(
 	fun draw(vector: Vector) {
 
 		graphics.color = vector.style.fillColor
-		graphics.fill(vector.getShape())
+		graphics.fill(vector.shape)
 
 		graphics.color = vector.style.StrokeColor
 		graphics.stroke = vector.style.StrokeProp
-		graphics.draw(vector.getShape())
+		graphics.draw(vector.shape)
 
 	}
 
