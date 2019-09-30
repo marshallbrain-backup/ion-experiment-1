@@ -1,7 +1,5 @@
 package com.brain.ion
 
-import com.brain.ion.components.Style
-import com.brain.ion.components.vectors.Rectangle
 import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.event.WindowEvent
