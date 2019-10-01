@@ -1,8 +1,7 @@
-package com.brain.ion
+package com.brain.ion.graphics
 
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
-import java.util.Queue
 
 class ComGraphics(
 		val bounds: Rectangle
@@ -74,28 +73,6 @@ class ComGraphics(
 	fun render() {
 		for ((i, g) in renderGroups)
 			g.render(this)
-	}
-
-	class Group (
-			val id: String
-	) {
-		
-		private val queue = mutableListOf<Vector>()
-		
-		fun addToQueue(vectors: Array<out Vector>) {
-			queue.addAll(vectors)
-		}
-		
-		fun removeFromQueue(vectors: Array<out Vector>) {
-			queue.removeAll(vectors)
-		}
-		
-		fun render(g: ComGraphics) {
-			for (v in queue) {
-				g.draw(v)
-			}
-		}
-		
 	}
 
 }
