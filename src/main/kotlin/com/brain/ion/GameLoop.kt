@@ -2,8 +2,7 @@ package com.brain.ion
 
 import com.brain.ion.components.vectors.Rectangle
 import com.brain.ion.components.vectors.Style
-import java.awt.Color
-import java.awt.Graphics2D
+import com.brain.ion.graphics.ComGraphics
 import java.awt.event.WindowEvent
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
