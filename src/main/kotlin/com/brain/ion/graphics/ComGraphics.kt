@@ -7,7 +7,7 @@ class ComGraphics(
 		private val bounds: Rectangle
 ) {
 	
-	internal val renderGroups = mutableMapOf<String, Group>()
+	val renderStack = RenderStack()
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -28,58 +28,14 @@ class ComGraphics(
 		graphics.color = vector.style.fillColor
 		graphics.fill(vector.shape)
 		
-		graphics.color = vector.style.StrokeColor
-		graphics.stroke = vector.style.StrokeProp
+		graphics.color = vector.style.strokeColor
+		graphics.stroke = vector.style.strokeProp
 		graphics.draw(vector.shape)
 		
 	}
-
-	fun createRenderGroup(id: String): Boolean {
-		var group = renderGroups.putIfAbsent(id, Group(id))
-		return group == null
-	}
-	
-	fun removeRenderGroup(id: String) {
-		renderGroups.remove(id)
-	}
-	
-	fun containsGroup(id: String) : Boolean {
-		return renderGroups.containsKey(id)
-	}
-	
-	fun addToQueue(id: String, vararg vectors: Vector) {
-		renderGroups[id]?.addToQueue(vectors)
-	}
-	
-	fun removeFromQueue(id: String, vararg vectors: Vector) {
-		renderGroups[id]?.removeFromQueue(vectors)
-	}
 	
 	fun render() {
-		for ((i, g) in renderGroups)
-			g.render(this)
-	}
-	
-	internal data class Group (
-			val id: String
-	) {
-		
-		val queue = mutableListOf<Vector>()
-		
-		fun addToQueue(vectors: Array<out Vector>) {
-			queue.addAll(vectors)
-		}
-		
-		fun removeFromQueue(vectors: Array<out Vector>) {
-			queue.removeAll(vectors)
-		}
-		
-		fun render(g: ComGraphics) {
-			for (v in queue) {
-				g.draw(v)
-			}
-		}
-		
+		renderStack.render(this)
 	}
 
 }
