@@ -17,17 +17,18 @@ class RenderStack {
 		return groupsCopy.toMap()
 	}
 	
-	fun createRenderGroup(id: String): Boolean {
-		var group = groups.putIfAbsent(id, Group(id))
-		return group == null
+	fun addGroup(group: Group): Boolean {
+		val o = groups.putIfAbsent(group.id, group)
+		return o == null
 	}
 	
-	fun removeRenderGroup(id: String) {
-		groups.remove(id)
+	fun removeRenderGroup(id: String): Boolean {
+		val g = groups[id] ?: return false
+		return removeRenderGroup(g)
 	}
 	
-	fun containsGroup(id: String) : Boolean {
-		return groups.containsKey(id)
+	fun removeRenderGroup(group: Group): Boolean {
+		return groups.remove(group.id, group)
 	}
 	
 	fun addToQueue(id: String, vararg vectors: Vector) {
