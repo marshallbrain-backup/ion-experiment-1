@@ -6,18 +6,20 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
 import java.awt.Rectangle
 
-internal class IonGraphicsTest {
+internal class RenderStackTest {
 	
-	private val graphics = IonGraphics(Rectangle(0, 0))
+	private val stack = RenderStack()
 	
 	@Nested
-	inner class CreateRenderGroup {
+	inner class AddGroup {
 		@Test
-		fun `group is created`() {
-			graphics.createRenderGroup("test")
+		fun `group is added`() {
+			val group = Group("test")
+			stack.addGroup(group)
 			
-			assertThat(graphics.renderGroups).containsKey("test")
-			assertThat(graphics.renderGroups).containsValue(IonGraphics.Group("test"))
+			val map = stack.getGroupsCopy()
+			
+			assertThat(map).containsValue(group)
 		}
 		
 		@Test
@@ -32,7 +34,15 @@ internal class IonGraphicsTest {
 		}
 		
 		@Test
-		fun `id already exist`() {
+		fun `group is removed using group instance`() {
+		}
+		
+		@Test
+		fun `id does not exist`() {
+		}
+		
+		@Test
+		fun `group does not exist`() {
 		}
 	}
 	
