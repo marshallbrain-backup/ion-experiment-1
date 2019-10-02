@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Nested
 import java.awt.Rectangle
 
-internal class ComGraphicsTest {
+internal class IonGraphicsTest {
 	
-	private val graphics = ComGraphics(Rectangle(0, 0))
+	private val graphics = IonGraphics(Rectangle(0, 0))
 	
 	@Nested
 	inner class CreateRenderGroup {
@@ -17,7 +17,7 @@ internal class ComGraphicsTest {
 			graphics.createRenderGroup("test")
 			
 			assertThat(graphics.renderGroups).containsKey("test")
-			assertThat(graphics.renderGroups).containsValue(ComGraphics.Group("test"))
+			assertThat(graphics.renderGroups).containsValue(IonGraphics.Group("test"))
 		}
 		
 		@Test

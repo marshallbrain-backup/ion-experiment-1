@@ -31,7 +31,7 @@ data class Group (
 		queue.removeAll(vectors)
 	}
 	
-	fun render(g: ComGraphics) {
+	fun render(g: IonGraphics) {
 		for (v in queue) {
 			g.draw(v)
 		}

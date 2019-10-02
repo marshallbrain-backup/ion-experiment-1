@@ -3,7 +3,7 @@ package com.brain.ion.graphics
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
-class ComGraphics(
+class IonGraphics(
 		private val bounds: Rectangle
 ) {
 	

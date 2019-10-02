@@ -2,14 +2,14 @@ package com.brain.ion
 
 import com.brain.ion.components.vectors.Rectangle
 import com.brain.ion.components.vectors.Style
-import com.brain.ion.graphics.ComGraphics
+import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
-	private val graphics = ComGraphics(canvas.bounds)
+	private val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
 

@@ -38,7 +38,7 @@ class RenderStack {
 		groups[id]?.removeFromQueue(vectors)
 	}
 	
-	fun render(graphics: ComGraphics) {
+	fun render(graphics: IonGraphics) {
 		for ((i, g) in groups)
 			g.render(graphics)
 	}
