@@ -4,10 +4,10 @@ import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
 class ComGraphics(
-		val bounds: Rectangle
+		private val bounds: Rectangle
 ) {
 	
-	private val renderGroups = mutableMapOf<String, Group>()
+	internal val renderGroups = mutableMapOf<String, Group>()
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -34,32 +34,17 @@ class ComGraphics(
 		
 	}
 
-	fun createRenderGroup(id: String) {
-		renderGroups.putIfAbsent(id, Group(id))
-	}
-	
-	fun addRenderGroup(group: Group) {
-		renderGroups.putIfAbsent(group.id, group)
-	}
-	
-	fun getRenderGroup(id: String): Group {
-		
-		var g = renderGroups[id]
-		if(g == null) {
-			g = Group(id)
-			renderGroups[id] = g
-		}
-		
-		return g
-		
+	fun createRenderGroup(id: String): Boolean {
+		var group = renderGroups.putIfAbsent(id, Group(id))
+		return group == null
 	}
 	
 	fun removeRenderGroup(id: String) {
 		renderGroups.remove(id)
 	}
 	
-	fun removeRenderGroup(group: Group) {
-		renderGroups.remove(group.id)
+	fun containsGroup(id: String) : Boolean {
+		return renderGroups.containsKey(id)
 	}
 	
 	fun addToQueue(id: String, vararg vectors: Vector) {
@@ -73,6 +58,28 @@ class ComGraphics(
 	fun render() {
 		for ((i, g) in renderGroups)
 			g.render(this)
+	}
+	
+	internal data class Group (
+			val id: String
+	) {
+		
+		val queue = mutableListOf<Vector>()
+		
+		fun addToQueue(vectors: Array<out Vector>) {
+			queue.addAll(vectors)
+		}
+		
+		fun removeFromQueue(vectors: Array<out Vector>) {
+			queue.removeAll(vectors)
+		}
+		
+		fun render(g: ComGraphics) {
+			for (v in queue) {
+				g.draw(v)
+			}
+		}
+		
 	}
 
 }
