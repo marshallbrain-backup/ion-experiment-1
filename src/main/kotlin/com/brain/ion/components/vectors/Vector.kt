@@ -3,10 +3,11 @@ package com.brain.ion.components.vectors
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Shape
-import java.awt.Stroke
 
 interface Vector {
-
+	
+	fun clone(): Vector
+	
 	val style: Style
 	val shape: Shape
 	
