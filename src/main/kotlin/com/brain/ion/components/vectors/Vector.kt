@@ -13,7 +13,7 @@ interface Vector {
 	
 }
 
-class Style(
+data class Style(
 		val fillColor: Color,
 		val strokeColor: Color,
 		val strokeProp: BasicStroke
