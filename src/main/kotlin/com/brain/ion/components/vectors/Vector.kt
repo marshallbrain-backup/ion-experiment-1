@@ -3,37 +3,72 @@ package com.brain.ion.components.vectors
 import java.awt.BasicStroke
 import java.awt.Color
 import java.awt.Shape
-import java.awt.Stroke
 
 interface Vector {
 	
-	fun getShape(): Shape
+	fun clone(): Vector
+	
+	val style: Style
+	val shape: Shape
 	
 }
 
-class Style(
-		strokeColorString: String = "#FFFFFF",
-		fillColorString: String = "#FFFFFF",
-		strokeOpacity: Float = 1f,
-		fillOpacity: Float = 1f,
-		strokeWidth: Int = 1
+data class Style(
+		val fillColor: Color,
+		val strokeColor: Color,
+		val strokeProp: BasicStroke
 ) {
-
-	val fillColor: Color
-	val StrokeColor: Color
-	val StrokeProp: BasicStroke
-
-	init {
-
-		val fillColorFormated = fillColorString.removePrefix("#").toUpperCase()
-		val strokeColorFormated = strokeColorString.removePrefix("#").toUpperCase()
-	    var fc = Color.decode("#$fillColorFormated")
-		var sc = Color.decode("#$strokeColorFormated")
-
-		fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity*255).toInt())
-		StrokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity*255).toInt())
-		StrokeProp = BasicStroke(strokeWidth.toFloat())
-
+	
+	private constructor(
+			c: Converter
+	) : this(c.fillColor, c.strokeColor, c.strokeProp)
+	
+	constructor(
+			strokeColorString: String,
+			fillColorString: String,
+			strokeOpacity: Float,
+			fillOpacity: Float,
+			strokeWidth: Int
+	) : this(Converter(strokeColorString, fillColorString, strokeOpacity, fillOpacity, strokeWidth))
+	
+	constructor(
+			fillColorString: String,
+			fillOpacity: Float
+	) : this("000000", fillColorString, 0f, fillOpacity, 0)
+	
+	constructor(
+			strokeColorString: String,
+			strokeOpacity: Float,
+			strokeWidth: Int
+	) : this(strokeColorString, "000000", strokeOpacity, 0f, strokeWidth)
+	
+	constructor() : this("000000", "000000", 0f, 0f, 0)
+	
+	constructor(s: Style) : this(s.fillColor, s.strokeColor, s.strokeProp)
+	
+	private class Converter(
+			strokeColorString: String,
+			fillColorString: String,
+			strokeOpacity: Float,
+			fillOpacity: Float,
+			strokeWidth: Int
+	) {
+		val fillColor: Color
+		val strokeColor: Color
+		val strokeProp: BasicStroke
+		
+		init {
+			
+			val fillColorFormatted = fillColorString.removePrefix("#").toUpperCase()
+			val strokeColorFormatted = strokeColorString.removePrefix("#").toUpperCase()
+			val fc = Color.decode("#$fillColorFormatted")
+			val sc = Color.decode("#$strokeColorFormatted")
+			
+			fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity*255).toInt())
+			strokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity*255).toInt())
+			strokeProp = BasicStroke(strokeWidth.toFloat())
+			
+		}
 	}
-
+	
 }
