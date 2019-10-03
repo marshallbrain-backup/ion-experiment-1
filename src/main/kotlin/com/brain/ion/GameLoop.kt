@@ -10,7 +10,7 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
-	private val graphics = IonGraphics(canvas.bounds)
+	val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
 
@@ -20,14 +20,6 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		
 		val bs = canvas.bufferStrategy
 		graphics.setGraphics(bs.drawGraphics)
-		
-		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
-		val rec = Rectangle(100, 100, 500, 500, style)
-		
-		val stack = graphics.renderStack
-		val group = Group("")
-		stack.addGroup(group)
-		stack.addToQueue("", rec)
 		
 	}
 	
