@@ -2,15 +2,15 @@ package com.brain.ion
 
 import com.brain.ion.components.vectors.Rectangle
 import com.brain.ion.components.vectors.Style
-import java.awt.Color
-import java.awt.Graphics2D
+import com.brain.ion.graphics.Group
+import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
-	private val graphics = ComGraphics(canvas.bounds)
+	private val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
 
@@ -24,8 +24,10 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		val style = Style("FFFFFF", "FF0000", 1f, 1f, 2)
 		val rec = Rectangle(100, 100, 500, 500, style)
 		
-		graphics.createRenderGroup("")
-		graphics.addToQueue("", rec)
+		val stack = graphics.renderStack
+		val group = Group("")
+		stack.addGroup(group)
+		stack.addToQueue("", rec)
 		
 	}
 	
