@@ -10,7 +10,7 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
-	private val graphics = IonGraphics(canvas.bounds)
+	val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
 
