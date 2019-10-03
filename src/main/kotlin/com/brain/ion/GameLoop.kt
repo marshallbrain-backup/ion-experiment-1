@@ -2,6 +2,7 @@ package com.brain.ion
 
 import com.brain.ion.components.vectors.Rectangle
 import com.brain.ion.components.vectors.Style
+import com.brain.ion.graphics.Group
 import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 
@@ -24,7 +25,8 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		val rec = Rectangle(100, 100, 500, 500, style)
 		
 		val stack = graphics.renderStack
-		stack.createRenderGroup("")
+		val group = Group("")
+		stack.addGroup(group)
 		stack.addToQueue("", rec)
 		
 	}
