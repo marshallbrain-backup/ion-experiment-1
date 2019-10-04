@@ -2,6 +2,9 @@ package com.brain.ion.graphics
 
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
+import java.awt.RenderingHints
+
+
 
 class IonGraphics(
 		private val bounds: Rectangle
@@ -17,6 +20,8 @@ class IonGraphics(
 		graphics.color = Color.DARK_GRAY
 		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
 		graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
+		
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
 	fun setGraphics(g: Graphics) {
