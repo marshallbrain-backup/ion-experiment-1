@@ -7,6 +7,8 @@ class Path(
 		override val style: Style = Style()
 ) : Vector {
 	
+	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
+	
 	constructor(v: Path) : this(v.shape, v.style)
 	
 	override fun clone(): Vector {
@@ -61,4 +63,29 @@ class Path(
 		return Path(tempPath, style)
 	}
 
+}
+
+private fun constructPath(pathString: String): Path2D.Double {
+	
+	val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
+	var tempPath = Path()
+	for (s in pathList){
+		val form = s.replace("\\s+","")
+		val type = form[0]
+		val par = form.removePrefix("$type(").removeSuffix(")").split(",")
+		when (type){
+			'M' -> tempPath = tempPath.moveAbs(par[0].toDouble(), par[1].toDouble())
+			'm' -> tempPath = tempPath.move(par[0].toDouble(), par[1].toDouble())
+			'L' -> tempPath = tempPath.lineAbs(par[0].toDouble(), par[1].toDouble())
+			'l' -> tempPath = tempPath.line(par[0].toDouble(), par[1].toDouble())
+			'X' -> tempPath = tempPath.lineXAbs(par[0].toDouble())
+			'x' -> tempPath = tempPath.lineX(par[0].toDouble())
+			'Y' -> tempPath = tempPath.lineYAbs(par[0].toDouble())
+			'y' -> tempPath = tempPath.lineY(par[0].toDouble())
+			'z', 'Z' -> tempPath = tempPath.close()
+		}
+	}
+	
+	return tempPath.shape
+	
 }
