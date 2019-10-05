@@ -2,10 +2,14 @@ package com.brain.ion.components.vectors
 
 import java.awt.geom.Path2D
 
-class Path(
+data class Path(
 		override val shape: Path2D.Double = Path2D.Double(),
 		override val style: Style = Style()
 ) : Vector {
+	
+	init {
+		shape.moveTo(0.0, 0.0)
+	}
 	
 	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
 	
