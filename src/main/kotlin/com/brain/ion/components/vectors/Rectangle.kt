@@ -7,7 +7,8 @@ data class Rectangle(
 	private val y: Number,
 	private val width: Number,
 	private val height: Number,
-	override val style: Style = Style()
+	override val style: Style = Style(),
+	override var onClick: () -> Unit = {}
 ): Vector {
 	
 	constructor(width: Number, height: Number) :

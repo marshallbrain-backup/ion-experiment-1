@@ -6,7 +6,8 @@ data class Circle(
 		private val x: Number,
 		private val y: Number,
 		private val radius: Number,
-		override val style: Style = Style()
+		override val style: Style = Style(),
+		override var onClick: () -> Unit = {}
 ): Vector {
 	
 	constructor(radius: Number) :

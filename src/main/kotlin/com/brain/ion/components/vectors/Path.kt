@@ -4,11 +4,14 @@ import java.awt.geom.Path2D
 
 data class Path(
 		override val shape: Path2D.Double = Path2D.Double(),
-		override val style: Style = Style()
+		override val style: Style = Style(),
+		override var onClick: () -> Unit = {}
 ) : Vector {
 	
 	init {
-		shape.moveTo(0.0, 0.0)
+		if (shape.currentPoint == null){
+			shape.moveTo(0.0, 0.0)
+		}
 	}
 	
 	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
