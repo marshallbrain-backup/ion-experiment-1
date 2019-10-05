@@ -3,9 +3,11 @@ package com.brain.ion.components.vectors
 import org.assertj.core.api.Assertions.assertThat
 
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.awt.geom.Rectangle2D
 
+@Tag("Vector")
 internal class RectangleTest {
 	
 	val i = 1

@@ -2,10 +2,12 @@ package com.brain.ion.components.vectors
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.awt.geom.Ellipse2D
 import java.awt.geom.Rectangle2D
 
+@Tag("Vector")
 internal class CircleTest {
 	
 	val i = 1

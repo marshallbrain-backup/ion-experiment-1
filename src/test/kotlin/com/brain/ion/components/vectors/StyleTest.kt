@@ -3,10 +3,12 @@ package com.brain.ion.components.vectors
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.awt.BasicStroke
 import java.awt.Color
 
+@Tag("Vector")
 internal class StyleTest {
 	
 	@Test
