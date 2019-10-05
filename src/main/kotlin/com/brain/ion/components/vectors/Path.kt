@@ -2,7 +2,7 @@ package com.brain.ion.components.vectors
 
 import java.awt.geom.Path2D
 
-class Path(
+data class Path(
 		override val shape: Path2D.Double = Path2D.Double(),
 		override val style: Style = Style()
 ) : Vector {
