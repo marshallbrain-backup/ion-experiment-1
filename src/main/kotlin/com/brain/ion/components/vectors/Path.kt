@@ -7,6 +7,10 @@ data class Path(
 		override val style: Style = Style()
 ) : Vector {
 	
+	init {
+		shape.moveTo(0.0, 0.0)
+	}
+	
 	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
 	
 	constructor(v: Path) : this(v.shape, v.style)
