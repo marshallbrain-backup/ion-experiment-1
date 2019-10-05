@@ -26,20 +26,20 @@ data class Style(
 	constructor(
 			strokeColorString: String,
 			fillColorString: String,
-			strokeOpacity: Float,
-			fillOpacity: Float,
-			strokeWidth: Int
+			strokeOpacity: Number,
+			fillOpacity: Number,
+			strokeWidth: Number
 	) : this(Converter(strokeColorString, fillColorString, strokeOpacity, fillOpacity, strokeWidth))
 	
 	constructor(
 			fillColorString: String,
-			fillOpacity: Float
+			fillOpacity: Number
 	) : this("000000", fillColorString, 0f, fillOpacity, 0)
 	
 	constructor(
 			strokeColorString: String,
-			strokeOpacity: Float,
-			strokeWidth: Int
+			strokeOpacity: Number,
+			strokeWidth: Number
 	) : this(strokeColorString, "000000", strokeOpacity, 0f, strokeWidth)
 	
 	constructor() : this("000000", "000000", 0f, 0f, 0)
@@ -49,9 +49,9 @@ data class Style(
 	private class Converter(
 			strokeColorString: String,
 			fillColorString: String,
-			strokeOpacity: Float,
-			fillOpacity: Float,
-			strokeWidth: Int
+			strokeOpacity: Number,
+			fillOpacity: Number,
+			strokeWidth: Number
 	) {
 		val fillColor: Color
 		val strokeColor: Color
@@ -64,8 +64,8 @@ data class Style(
 			val fc = Color.decode("#$fillColorFormatted")
 			val sc = Color.decode("#$strokeColorFormatted")
 			
-			fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity*255).toInt())
-			strokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity*255).toInt())
+			fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity.toFloat()*255).toInt())
+			strokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity.toFloat()*255).toInt())
 			strokeProp = BasicStroke(strokeWidth.toFloat())
 			
 		}
