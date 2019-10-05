@@ -4,12 +4,16 @@ import com.brain.ion.components.vectors.Rectangle
 import com.brain.ion.components.vectors.Style
 import com.brain.ion.graphics.Group
 import com.brain.ion.graphics.IonGraphics
+import java.awt.Graphics2D
+import java.awt.RenderingHints
 import java.awt.event.WindowEvent
+import java.awt.image.BufferStrategy
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
+	private val bs: BufferStrategy
 	val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
@@ -18,7 +22,7 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 		
 		canvas.createBufferStrategy(2)
 		
-		val bs = canvas.bufferStrategy
+		bs = canvas.bufferStrategy
 		graphics.setGraphics(bs.drawGraphics)
 		
 	}
@@ -122,7 +126,6 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private fun render() {
 		
-		var bs = canvas.bufferStrategy
 		graphics.setGraphics(bs.drawGraphics)
 		
 		graphics.render()
