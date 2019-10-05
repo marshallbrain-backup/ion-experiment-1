@@ -1,34 +1,35 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
 
 data class Group (
 		val id: String
 ) {
 	
-	private val queue = mutableListOf<Vector>()
+	private val queue = mutableListOf<Component>()
 	
 	constructor(parent: Group) : this(parent.id) {
 		queue.addAll(getQueueCopy())
 	}
 	
-	fun getQueueCopy() : List<Vector> {
+	fun getQueueCopy() : List<Component> {
 		
-		val queueCopy = mutableListOf<Vector>()
+		val queueCopy = mutableListOf<Component>()
 		
-		for (v in queue) {
-			queueCopy.add(v.clone())
+		for (c in queue) {
+			queueCopy.add(c.clone())
 		}
 		
 		return queueCopy.toList()
 	}
 	
-	fun addToQueue(vectors: Array<out Vector>) {
-		queue.addAll(vectors)
+	fun addToQueue(vararg component: Component) {
+		queue.addAll(component)
 	}
 	
-	fun removeFromQueue(vectors: Array<out Vector>) {
-		queue.removeAll(vectors)
+	fun removeFromQueue(vararg component: Component) {
+		queue.removeAll(component)
 	}
 	
 	fun render(g: IonGraphics) {

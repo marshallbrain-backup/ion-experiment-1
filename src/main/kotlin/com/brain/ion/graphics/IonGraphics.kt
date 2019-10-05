@@ -1,5 +1,6 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
 import java.awt.RenderingHints
@@ -26,6 +27,15 @@ class IonGraphics(
 	
 	fun setGraphics(g: Graphics) {
 		setGraphics(g as Graphics2D)
+	}
+	
+	fun draw(component: Component) {
+		
+		for (c in component.getComponents()) {
+			if(c is Vector) draw(c)
+			else draw(c)
+		}
+		
 	}
 
 	fun draw(vector: Vector) {
