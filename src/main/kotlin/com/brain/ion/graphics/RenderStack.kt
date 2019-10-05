@@ -1,5 +1,6 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
 
 class RenderStack {
@@ -31,12 +32,12 @@ class RenderStack {
 		return groups.remove(group.id, group)
 	}
 	
-	fun addToQueue(id: String, vararg vectors: Vector) {
-		groups[id]?.addToQueue(vectors)
+	fun addToQueue(id: String, vararg components: Component) {
+		groups[id]?.addToQueue(*components)
 	}
 	
-	fun removeFromQueue(id: String, vararg vectors: Vector) {
-		groups[id]?.removeFromQueue(vectors)
+	fun removeFromQueue(id: String, vararg components: Component) {
+		groups[id]?.removeFromQueue(*components)
 	}
 	
 	fun render(graphics: IonGraphics) {
