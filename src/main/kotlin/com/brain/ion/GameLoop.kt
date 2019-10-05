@@ -1,19 +1,25 @@
 package com.brain.ion
 
-import java.awt.Color
-import java.awt.Graphics2D
+import com.brain.ion.components.vectors.Rectangle
+import com.brain.ion.components.vectors.Style
+import com.brain.ion.graphics.Group
+import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 
 class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
+	val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
 
 	init {
 		
 		canvas.createBufferStrategy(2)
+		
+		val bs = canvas.bufferStrategy
+		graphics.setGraphics(bs.drawGraphics)
 		
 	}
 	
@@ -116,17 +122,12 @@ class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>): R
 	
 	private fun render() {
 		
-		val bs = canvas.bufferStrategy
-		val g = bs.drawGraphics as Graphics2D
+		var bs = canvas.bufferStrategy
+		graphics.setGraphics(bs.drawGraphics)
 		
-		val rec = canvas.bounds
+		graphics.render()
 		
-		g.color = Color.DARK_GRAY
-		g.setClip(rec.x, rec.y, rec.width, rec.height)
-		g.fillRect(rec.x, rec.y, rec.width, rec.height)
-		
-		g.dispose();
-		bs.show();
+		bs.show()
 		
 	}
 	
