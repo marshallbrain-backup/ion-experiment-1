@@ -1,12 +1,14 @@
 package com.brain.ion.components.vectors
 
+import com.brain.ion.components.Component
 import java.awt.geom.Path2D
 
 data class Path(
 		override val shape: Path2D.Double = Path2D.Double(),
-		override val style: Style = Style(),
-		override var onClick: () -> Unit = {}
+		override val style: Style = Style()
 ) : Vector {
+	
+	override var onClick: () -> Unit = {}
 	
 	init {
 		if (shape.currentPoint == null){
@@ -17,6 +19,10 @@ data class Path(
 	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
 	
 	constructor(v: Path) : this(v.shape, v.style)
+	
+	override fun getComponents(): List<Component> {
+		return listOf(this)
+	}
 	
 	override fun clone(): Vector {
 		return Path(this)

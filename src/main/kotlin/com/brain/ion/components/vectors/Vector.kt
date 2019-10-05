@@ -8,8 +8,6 @@ import java.awt.geom.Area
 
 interface Vector : Component {
 	
-	fun clone(): Vector
-	
 	val style: Style
 	val shape: Shape
 	

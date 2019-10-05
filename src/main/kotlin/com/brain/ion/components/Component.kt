@@ -7,6 +7,12 @@ interface Component {
 	
 	var onClick: () -> Unit
 	
+	fun clone(): Component
+	
+	fun getComponents(): List<Component> {
+		return listOf()
+	}
+	
 	fun clicked(p: Point) {
 		if (isClicked(p)) {
 			onClick()

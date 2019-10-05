@@ -1,14 +1,18 @@
 package com.brain.ion.components.vectors
 
+import com.brain.ion.components.Component
 import java.awt.geom.Ellipse2D
 
 data class Circle(
 		private val x: Number,
 		private val y: Number,
 		private val radius: Number,
-		override val style: Style = Style(),
-		override var onClick: () -> Unit = {}
+		override val style: Style = Style()
 ): Vector {
+	
+	override val shape = Ellipse2D.Double(x.toDouble(), y.toDouble(), radius.toDouble(), radius.toDouble())
+	
+	override var onClick: () -> Unit = {}
 	
 	constructor(radius: Number) :
 			this(0, 0, radius)
@@ -19,7 +23,9 @@ data class Circle(
 	constructor(v: Circle) :
 			this(v.x, v.y, v.radius, Style(v.style))
 	
-	override val shape = Ellipse2D.Double(x.toDouble(), y.toDouble(), radius.toDouble(), radius.toDouble())
+	override fun getComponents(): List<Component> {
+		return listOf(this)
+	}
 	
 	override fun clone(): Vector {
 		return Circle(this)
