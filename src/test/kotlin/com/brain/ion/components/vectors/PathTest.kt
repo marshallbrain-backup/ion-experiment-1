@@ -1,6 +1,5 @@
 package com.brain.ion.components.vectors
 
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
@@ -17,7 +16,7 @@ internal class PathTest {
 	val d = 1.500_000_000_005
 	
 	@Nested
-	inner class PathCreation() {
+	inner class PathCreation {
 		@Test
 		fun `using ints`() {
 			val actual = actualSetup(i).shape
@@ -25,6 +24,7 @@ internal class PathTest {
 			
 			assertThat(Area(actual).equals(Area(expected)))
 		}
+		
 		@Test
 		fun `using longs`() {
 			val actual = actualSetup(l).shape
@@ -32,6 +32,7 @@ internal class PathTest {
 			
 			assertThat(Area(actual).equals(Area(expected)))
 		}
+		
 		@Test
 		fun `using floats`() {
 			val actual = actualSetup(f).shape
@@ -39,6 +40,7 @@ internal class PathTest {
 			
 			assertThat(Area(actual).equals(Area(expected)))
 		}
+		
 		@Test
 		fun `using doubles`() {
 			val actual = actualSetup(d).shape

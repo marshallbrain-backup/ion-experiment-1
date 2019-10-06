@@ -11,7 +11,7 @@ data class Path(
 	override var onClick: () -> Unit = {}
 	
 	init {
-		if (shape.currentPoint == null){
+		if (shape.currentPoint == null) {
 			shape.moveTo(0.0, 0.0)
 		}
 	}
@@ -75,18 +75,18 @@ data class Path(
 		tempPath.closePath()
 		return Path(tempPath, style)
 	}
-
+	
 }
 
 private fun constructPath(pathString: String): Path2D.Double {
 	
 	val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
 	var tempPath = Path()
-	for (s in pathList){
-		val form = s.replace("\\s+","")
+	for (s in pathList) {
+		val form = s.replace("\\s+", "")
 		val type = form[0]
 		val par = form.removePrefix("$type(").removeSuffix(")").split(",")
-		when (type){
+		when (type) {
 			'M' -> tempPath = tempPath.moveAbs(par[0].toDouble(), par[1].toDouble())
 			'm' -> tempPath = tempPath.move(par[0].toDouble(), par[1].toDouble())
 			'L' -> tempPath = tempPath.lineAbs(par[0].toDouble(), par[1].toDouble())

@@ -19,16 +19,16 @@ interface Component {
 		}
 	}
 	
-	fun getInteractArea() : Area {
+	fun getInteractArea(): Area {
 		return Area()
 	}
 	
-	fun isClicked(p: Point) : Boolean {
+	fun isClicked(p: Point): Boolean {
 		if (getInteractArea().contains(p)) {
 			return true
 		}
 		
 		return false
 	}
-
+	
 }

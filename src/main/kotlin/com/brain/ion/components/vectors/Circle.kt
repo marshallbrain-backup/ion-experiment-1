@@ -8,7 +8,7 @@ data class Circle(
 		private val y: Number,
 		private val radius: Number,
 		override val style: Style = Style()
-): Vector {
+) : Vector {
 	
 	override val shape = Ellipse2D.Double(x.toDouble(), y.toDouble(), radius.toDouble(), radius.toDouble())
 	

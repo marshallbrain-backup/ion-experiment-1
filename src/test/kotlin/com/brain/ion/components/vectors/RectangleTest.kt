@@ -16,7 +16,7 @@ internal class RectangleTest {
 	val d = 1.500_000_000_005
 	
 	@Nested
-	inner class RectangleCreation() {
+	inner class RectangleCreation {
 		@Test
 		fun `using ints`() {
 			val rec = Rectangle(i, i, i, i)
@@ -25,6 +25,7 @@ internal class RectangleTest {
 			
 			assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using longs`() {
 			val rec = Rectangle(l, l, l, l)
@@ -33,6 +34,7 @@ internal class RectangleTest {
 			
 			assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using floats`() {
 			val rec = Rectangle(f, f, f, f)
@@ -41,6 +43,7 @@ internal class RectangleTest {
 			
 			assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using doubles`() {
 			val rec = Rectangle(d, d, d, d)

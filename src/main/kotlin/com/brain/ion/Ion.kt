@@ -1,8 +1,6 @@
 package com.brain.ion
 
-import com.brain.ion.graphics.IonGraphics
-
-class Ion (name: String = "ion") {
+class Ion(name: String = "ion") {
 	
 	private val mainFrame = Frame(name = name, x = 50, y = 50, width = 1600, height = 900)
 	private val minorFrames = mutableListOf<Frame>()
@@ -13,5 +11,5 @@ class Ion (name: String = "ion") {
 	init {
 		gameLoop.start()
 	}
-
+	
 }

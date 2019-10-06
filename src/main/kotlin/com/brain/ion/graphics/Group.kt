@@ -1,9 +1,8 @@
 package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
 
-data class Group (
+data class Group(
 		val id: String
 ) {
 	
@@ -13,7 +12,7 @@ data class Group (
 		queue.addAll(getQueueCopy())
 	}
 	
-	fun getQueueCopy() : List<Component> {
+	fun getQueueCopy(): List<Component> {
 		
 		val queueCopy = mutableListOf<Component>()
 		

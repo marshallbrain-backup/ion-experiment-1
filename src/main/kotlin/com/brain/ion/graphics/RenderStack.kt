@@ -1,13 +1,12 @@
 package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
 
 class RenderStack {
 	
 	private val groups = mutableMapOf<String, Group>()
 	
-	fun getGroupsCopy() : Map<String, Group> {
+	fun getGroupsCopy(): Map<String, Group> {
 		
 		val groupsCopy = mutableMapOf<String, Group>()
 		

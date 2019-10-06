@@ -68,8 +68,8 @@ data class Style(
 			val fc = Color.decode("#$fillColorFormatted")
 			val sc = Color.decode("#$strokeColorFormatted")
 			
-			fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity.toFloat()*255).toInt())
-			strokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity.toFloat()*255).toInt())
+			fillColor = Color(fc.red, fc.green, fc.blue, (fillOpacity.toFloat() * 255).toInt())
+			strokeColor = Color(sc.red, sc.green, sc.blue, (strokeOpacity.toFloat() * 255).toInt())
 			strokeProp = BasicStroke(strokeWidth.toFloat())
 			
 		}

@@ -4,18 +4,17 @@ import java.awt.Canvas
 import java.awt.Dimension
 import java.awt.Point
 import javax.swing.JFrame
-import javax.swing.JTextField
 
 class Frame(
-	name: String = "Ion",
-	x: Int = 0,
-	y: Int = 0,
-	width: Int = 0,
-	height: Int = 0,
-	decorated: Boolean = true
+		name: String = "Ion",
+		x: Int = 0,
+		y: Int = 0,
+		width: Int = 0,
+		height: Int = 0,
+		decorated: Boolean = true
 ) {
 	
-	val frame = JFrame();
+	val frame = JFrame()
 	val canvas = Canvas()
 	
 	init {
@@ -30,7 +29,7 @@ class Frame(
 		canvas.preferredSize = Dimension(width, height)
 		frame.add(canvas)
 		
-		frame.pack();
+		frame.pack()
 		
 	}
 	

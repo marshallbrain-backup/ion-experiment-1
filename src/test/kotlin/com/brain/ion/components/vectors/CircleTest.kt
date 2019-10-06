@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.awt.geom.Ellipse2D
-import java.awt.geom.Rectangle2D
 
 @Tag("Vector")
 internal class CircleTest {
@@ -16,7 +15,7 @@ internal class CircleTest {
 	val d = 1.500_000_000_005
 	
 	@Nested
-	inner class CircleCreation() {
+	inner class CircleCreation {
 		@Test
 		fun `using ints`() {
 			val rec = Circle(i, i, i)
@@ -25,6 +24,7 @@ internal class CircleTest {
 			
 			Assertions.assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using longs`() {
 			val rec = Circle(l, l, l)
@@ -33,6 +33,7 @@ internal class CircleTest {
 			
 			Assertions.assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using floats`() {
 			val rec = Circle(f, f, f)
@@ -41,6 +42,7 @@ internal class CircleTest {
 			
 			Assertions.assertThat(actual).isEqualTo(expected)
 		}
+		
 		@Test
 		fun `using doubles`() {
 			val rec = Circle(d, d, d)
