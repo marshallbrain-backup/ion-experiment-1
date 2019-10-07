@@ -15,8 +15,8 @@ class IonGraphics(
 	
 	private lateinit var graphics: Graphics2D
 	
-	fun setGraphics(g: Graphics2D) {
-		graphics = g
+	fun setGraphics(g: Graphics) {
+		graphics = g.create() as Graphics2D
 		
 		graphics.color = Color.DARK_GRAY
 		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
@@ -39,13 +39,14 @@ class IonGraphics(
 	}
 
 	fun draw(vector: Vector) {
+		val g = graphics.create() as Graphics2D
 		
-		graphics.color = vector.style.fillColor
-		graphics.fill(vector.shape)
+		g.color = vector.style.fillColor
+		g.fill(vector.shape)
 		
-		graphics.color = vector.style.strokeColor
-		graphics.stroke = vector.style.strokeProp
-		graphics.draw(vector.shape)
+		g.color = vector.style.strokeColor
+		g.stroke = vector.style.strokeProp
+		g.draw(vector.shape)
 		
 	}
 	
