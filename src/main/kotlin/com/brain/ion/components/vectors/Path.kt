@@ -80,22 +80,24 @@ data class Path(
 
 private fun constructPath(pathString: String): Path2D.Double {
 	
+	//TODO also split after ')' without a ';' after it
 	val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
 	var tempPath = Path()
 	for (s in pathList){
 		val form = s.replace("\\s+","")
 		val type = form[0]
 		val par = form.removePrefix("$type(").removeSuffix(")").split(",")
-		when (type){
-			'M' -> tempPath = tempPath.moveAbs(par[0].toDouble(), par[1].toDouble())
-			'm' -> tempPath = tempPath.move(par[0].toDouble(), par[1].toDouble())
-			'L' -> tempPath = tempPath.lineAbs(par[0].toDouble(), par[1].toDouble())
-			'l' -> tempPath = tempPath.line(par[0].toDouble(), par[1].toDouble())
-			'X' -> tempPath = tempPath.lineXAbs(par[0].toDouble())
-			'x' -> tempPath = tempPath.lineX(par[0].toDouble())
-			'Y' -> tempPath = tempPath.lineYAbs(par[0].toDouble())
-			'y' -> tempPath = tempPath.lineY(par[0].toDouble())
-			'z', 'Z' -> tempPath = tempPath.close()
+		tempPath = when (type){
+			'M' -> tempPath.moveAbs(par[0].toDouble(), par[1].toDouble())
+			'm' -> tempPath.move(par[0].toDouble(), par[1].toDouble())
+			'L' -> tempPath.lineAbs(par[0].toDouble(), par[1].toDouble())
+			'l' -> tempPath.line(par[0].toDouble(), par[1].toDouble())
+			'X' -> tempPath.lineXAbs(par[0].toDouble())
+			'x' -> tempPath.lineX(par[0].toDouble())
+			'Y' -> tempPath.lineYAbs(par[0].toDouble())
+			'y' -> tempPath.lineY(par[0].toDouble())
+			'z', 'Z' -> tempPath.close()
+			else -> TODO("Add invalid character reporting")
 		}
 	}
 	
