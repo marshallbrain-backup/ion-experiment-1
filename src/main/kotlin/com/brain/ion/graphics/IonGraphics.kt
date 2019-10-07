@@ -53,6 +53,10 @@ class IonGraphics(
 		
 		g.color = vector.style.strokeColor
 		g.stroke = vector.style.strokeProp
+		
+		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
+			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		}
 		g.draw(vector.shape)
 		
 	}
