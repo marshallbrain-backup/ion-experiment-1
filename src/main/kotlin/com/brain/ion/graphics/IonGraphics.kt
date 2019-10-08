@@ -5,8 +5,6 @@ import com.brain.ion.components.vectors.Vector
 import java.awt.*
 import java.awt.RenderingHints
 
-
-
 class IonGraphics(
 		private val bounds: Rectangle
 ) {
@@ -15,8 +13,8 @@ class IonGraphics(
 	
 	private lateinit var graphics: Graphics2D
 	
-	fun setGraphics(g: Graphics2D) {
-		graphics = g
+	fun setGraphics(g: Graphics) {
+		graphics = g.create() as Graphics2D
 		
 		graphics.color = Color.DARK_GRAY
 		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
@@ -25,27 +23,41 @@ class IonGraphics(
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
-	fun setGraphics(g: Graphics) {
-		setGraphics(g as Graphics2D)
-	}
-	
-	fun draw(component: Component) {
+	fun draw(component: Component, x: Number = component.xOffset, y: Number = component.yOffset) {
 		
 		for (c in component.getComponents()) {
-			if(c is Vector) draw(c)
-			else draw(c)
+			if (c is Vector) {
+				draw(c,
+						x.toDouble() + c.xOffset.toDouble(),
+						y.toDouble() + c.yOffset.toDouble()
+				)
+			}
+			
+			else {
+				draw(c,
+						x.toDouble() + c.xOffset.toDouble(),
+						y.toDouble() + c.yOffset.toDouble()
+				)
+			}
 		}
 		
 	}
-
-	fun draw(vector: Vector) {
+	
+	fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
 		
-		graphics.color = vector.style.fillColor
-		graphics.fill(vector.shape)
+		val g = graphics.create() as Graphics2D
+		g.translate(x.toInt(), y.toInt())
 		
-		graphics.color = vector.style.strokeColor
-		graphics.stroke = vector.style.strokeProp
-		graphics.draw(vector.shape)
+		g.color = vector.style.fillColor
+		g.fill(vector.shape)
+		
+		g.color = vector.style.strokeColor
+		g.stroke = vector.style.strokeProp
+		
+		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
+			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		}
+		g.draw(vector.shape)
 		
 	}
 	

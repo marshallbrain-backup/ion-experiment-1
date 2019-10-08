@@ -2,7 +2,11 @@ package com.brain.ion.components
 
 import java.awt.geom.Area
 
-class Collection(vararg component: Component) : Component {
+class Collection(
+		override val xOffset: Number = 0,
+		override val yOffset: Number = 0,
+		vararg component: Component
+) : Component {
 	
 	private val components = mutableListOf(*component)
 	private val interactArea = Area()

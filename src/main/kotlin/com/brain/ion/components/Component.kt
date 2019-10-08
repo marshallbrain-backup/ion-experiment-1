@@ -5,6 +5,11 @@ import java.awt.geom.Area
 
 interface Component {
 	
+	val xOffset: Number
+			get() = 0
+	val yOffset: Number
+			get() = 0
+	
 	var onClick: () -> Unit
 	
 	fun clone(): Component
