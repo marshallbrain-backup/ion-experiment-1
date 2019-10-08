@@ -24,10 +24,6 @@ data class Rectangle(
 	constructor(v: Rectangle) :
 			this(v.x, v.y, v.width, v.height, Style(v.style))
 	
-	override fun getComponents(): List<Component> {
-		return listOf(this)
-	}
-	
 	override fun clone(): Vector {
 		return Rectangle(this)
 	}

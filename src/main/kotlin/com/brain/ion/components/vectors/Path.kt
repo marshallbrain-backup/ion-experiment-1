@@ -20,10 +20,6 @@ data class Path(
 	
 	constructor(v: Path) : this(v.shape, v.style)
 	
-	override fun getComponents(): List<Component> {
-		return listOf(this)
-	}
-	
 	override fun clone(): Vector {
 		return Path(this)
 	}

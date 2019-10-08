@@ -13,9 +13,8 @@ interface Vector : Component {
 	
 	override fun getInteractArea(): Area {
 		return Area(shape)
-	}
-	
-}
+	override fun getComponents(): List<Component> {
+		return listOf(this)
 	}
 	
 }

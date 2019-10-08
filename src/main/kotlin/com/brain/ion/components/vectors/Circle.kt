@@ -23,10 +23,6 @@ data class Circle(
 	constructor(v: Circle) :
 			this(v.x, v.y, v.radius, Style(v.style))
 	
-	override fun getComponents(): List<Component> {
-		return listOf(this)
-	}
-	
 	override fun clone(): Vector {
 		return Circle(this)
 	}
