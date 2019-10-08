@@ -8,8 +8,6 @@ data class Path(
 		override val style: Style = Style()
 ) : Vector {
 	
-	override var onClick: () -> Unit = {}
-	
 	init {
 		if (shape.currentPoint == null){
 			shape.moveTo(0.0, 0.0)

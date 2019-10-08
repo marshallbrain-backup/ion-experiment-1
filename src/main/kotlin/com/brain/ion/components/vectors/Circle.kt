@@ -12,8 +12,6 @@ data class Circle(
 	
 	override val shape = Ellipse2D.Double(x.toDouble(), y.toDouble(), radius.toDouble(), radius.toDouble())
 	
-	override var onClick: () -> Unit = {}
-	
 	constructor(radius: Number) :
 			this(0, 0, radius)
 	

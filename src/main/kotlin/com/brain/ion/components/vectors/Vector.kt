@@ -11,8 +11,6 @@ interface Vector : Component {
 	val style: Style
 	val shape: Shape
 	
-	override fun getInteractArea(): Area {
-		return Area(shape)
 	override fun getComponents(): List<Component> {
 		return listOf(this)
 	}

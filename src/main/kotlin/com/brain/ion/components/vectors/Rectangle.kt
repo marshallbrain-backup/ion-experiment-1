@@ -13,8 +13,6 @@ data class Rectangle(
 	
 	override val shape = Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
-	override var onClick: () -> Unit = {}
-	
 	constructor(width: Number, height: Number) :
 			this(0f, 0f, width, height)
 	

@@ -3,15 +3,11 @@ package com.brain.ion.components
 import java.awt.geom.Area
 
 class Collection(
-		override val xOffset: Number = 0,
-		override val yOffset: Number = 0,
 		vararg component: Component
 ) : Component {
 	
 	private val components = mutableListOf(*component)
 	private val interactArea = Area()
-	
-	override var onClick: () -> Unit = {}
 	
 	override fun getComponents(): List<Component> {
 		return components.toList()
@@ -30,15 +26,6 @@ class Collection(
 	fun resetComponents() {
 		components.clear()
 		interactArea.reset()
-	}
-	
-	override fun getInteractArea(): Area {
-		if (interactArea.isEmpty) {
-			for (c in components) {
-				interactArea.add(c.getInteractArea())
-			}
-		}
-		return interactArea
 	}
 	
 	override fun clone(): Component {
