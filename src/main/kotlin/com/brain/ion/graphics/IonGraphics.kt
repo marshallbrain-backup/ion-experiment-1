@@ -23,30 +23,21 @@ class IonGraphics(
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
-	fun draw(component: Component, x: Number = component.xOffset, y: Number = component.yOffset) {
+	fun draw(component: Component) {
 		
 		for (c in component.getComponents()) {
 			if (c is Vector) {
-				draw(c,
-						x.toDouble() + c.xOffset.toDouble(),
-						y.toDouble() + c.yOffset.toDouble()
-				)
-			}
-			
-			else {
-				draw(c,
-						x.toDouble() + c.xOffset.toDouble(),
-						y.toDouble() + c.yOffset.toDouble()
-				)
+				draw(c)
+			} else {
+				draw(c)
 			}
 		}
 		
 	}
 	
-	fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
+	fun draw(vector: Vector) {
 		
 		val g = graphics.create() as Graphics2D
-		g.translate(x.toInt(), y.toInt())
 		
 		g.color = vector.style.fillColor
 		g.fill(vector.shape)
