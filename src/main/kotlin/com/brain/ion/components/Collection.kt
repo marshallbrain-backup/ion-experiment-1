@@ -1,11 +1,13 @@
 package com.brain.ion.components
 
+import com.brain.ion.components.properties.Property
 import java.awt.geom.Area
 
 class Collection(
 		vararg component: Component
 ) : Component {
 	
+	override val properties = mutableListOf<Property>()
 	private val components = mutableListOf(*component)
 	private val interactArea = Area()
 	

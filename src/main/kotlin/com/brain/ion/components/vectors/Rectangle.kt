@@ -1,6 +1,7 @@
 package com.brain.ion.components.vectors
 
 import com.brain.ion.components.Component
+import com.brain.ion.components.properties.Property
 import java.awt.geom.Rectangle2D
 
 data class Rectangle(
@@ -11,6 +12,7 @@ data class Rectangle(
 	override val style: Style = Style()
 ): Vector {
 	
+	override val properties = mutableListOf<Property>()
 	override val shape = Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
 	constructor(width: Number, height: Number) :

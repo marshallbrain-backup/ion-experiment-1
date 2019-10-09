@@ -1,12 +1,15 @@
 package com.brain.ion.components.vectors
 
 import com.brain.ion.components.Component
+import com.brain.ion.components.properties.Property
 import java.awt.geom.Path2D
 
 data class Path(
 		override val shape: Path2D.Double = Path2D.Double(),
 		override val style: Style = Style()
 ) : Vector {
+	
+	override val properties = mutableListOf<Property>()
 	
 	init {
 		if (shape.currentPoint == null){

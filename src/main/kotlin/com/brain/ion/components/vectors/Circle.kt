@@ -1,6 +1,7 @@
 package com.brain.ion.components.vectors
 
 import com.brain.ion.components.Component
+import com.brain.ion.components.properties.Property
 import java.awt.geom.Ellipse2D
 
 data class Circle(
@@ -10,6 +11,7 @@ data class Circle(
 		override val style: Style = Style()
 ): Vector {
 	
+	override val properties = mutableListOf<Property>()
 	override val shape = Ellipse2D.Double(x.toDouble(), y.toDouble(), radius.toDouble(), radius.toDouble())
 	
 	constructor(radius: Number) :
