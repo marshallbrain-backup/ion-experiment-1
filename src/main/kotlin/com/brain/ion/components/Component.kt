@@ -8,6 +8,7 @@ import java.awt.geom.Area
 //TODO animations
 interface Component {
 	
+	val id: String
 	val properties: MutableList<Property>
 	
 	fun clone(): Component
@@ -15,5 +16,6 @@ interface Component {
 	fun getComponents(): List<Component> {
 		return listOf()
 	}
+	fun clone(properties: Map<String, () -> Any>): Component
 
 }

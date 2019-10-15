@@ -4,6 +4,7 @@ import com.brain.ion.components.properties.Property
 import java.awt.geom.Area
 
 class Collection(
+		override val id: String,
 		vararg component: Component
 ) : Component {
 	
@@ -31,6 +32,9 @@ class Collection(
 	}
 	
 	override fun clone(): Component {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+	override fun clone(properties: Map<String, () -> Any>): Component {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 	}
 	

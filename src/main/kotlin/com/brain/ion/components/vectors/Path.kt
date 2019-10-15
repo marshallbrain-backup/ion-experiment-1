@@ -5,6 +5,7 @@ import com.brain.ion.components.properties.Property
 import java.awt.geom.Path2D
 
 data class Path(
+		override val id: String,
 		override val shape: Path2D.Double = Path2D.Double(),
 		override val style: Style = Style()
 ) : Vector {
@@ -17,18 +18,22 @@ data class Path(
 		}
 	}
 	
-	constructor(pathString: String, style: Style = Style()) : this(constructPath(pathString), style)
+	constructor(id: String, pathString: String, style: Style = Style()) : this(id, constructPath(pathString), style)
 	
-	constructor(v: Path) : this(v.shape, v.style)
+	constructor(v: Path) : this(v.id, v.shape, v.style)
 	
 	override fun clone(): Vector {
 		return Path(this)
 	}
 	
+	override fun clone(properties: Map<String, () -> Any>): Component {
+		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	}
+	
 	fun moveAbs(x: Number, y: Number): Path {
 		val tempPath = Path2D.Double(shape)
 		tempPath.moveTo(x.toDouble(), y.toDouble())
-		return Path(tempPath, style)
+		return Path(id, tempPath, style)
 	}
 	
 	fun move(dx: Number, dy: Number): Path {
@@ -39,7 +44,7 @@ data class Path(
 	fun lineAbs(x: Number, y: Number): Path {
 		val tempPath = Path2D.Double(shape)
 		tempPath.lineTo(x.toDouble(), y.toDouble())
-		return Path(tempPath, style)
+		return Path(id, tempPath, style)
 	}
 	
 	fun line(dx: Number, dy: Number): Path {
@@ -70,7 +75,7 @@ data class Path(
 	fun close(): Path {
 		val tempPath = Path2D.Double(shape)
 		tempPath.closePath()
-		return Path(tempPath, style)
+		return Path(id, tempPath, style)
 	}
 
 }
@@ -79,7 +84,7 @@ private fun constructPath(pathString: String): Path2D.Double {
 	
 	//TODO also split after ')' without a ';' after it
 	val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
-	var tempPath = Path()
+	var tempPath = Path("")
 	for (s in pathList){
 		val form = s.replace("\\s+","")
 		val type = form[0]
