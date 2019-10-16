@@ -1,5 +1,7 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
+
 class RenderStack {
 	
 	private val groups = mutableMapOf<String, Group>()
@@ -8,9 +10,9 @@ class RenderStack {
 		
 		val groupsCopy = mutableMapOf<String, Group>()
 		
-		for ((id, g) in groups) {
-			groupsCopy[id] = Group(g)
-		}
+//		for ((id, g) in groups) {
+//			groupsCopy[id] = Group(g)
+//		}
 		
 		return groupsCopy.toMap()
 	}
