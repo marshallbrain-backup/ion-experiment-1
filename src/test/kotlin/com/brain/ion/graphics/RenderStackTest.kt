@@ -1,6 +1,5 @@
 package com.brain.ion.graphics
 
-import com.brain.ion.components.vectors.Rectangle
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 

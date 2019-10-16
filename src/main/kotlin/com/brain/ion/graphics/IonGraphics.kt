@@ -1,7 +1,5 @@
 package com.brain.ion.graphics
 
-import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
 import java.awt.*
 import java.awt.RenderingHints
 

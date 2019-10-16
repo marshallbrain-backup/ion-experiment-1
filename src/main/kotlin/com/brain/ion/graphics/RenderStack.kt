@@ -1,8 +1,5 @@
 package com.brain.ion.graphics
 
-import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
-
 class RenderStack {
 	
 	private val groups = mutableMapOf<String, Group>()

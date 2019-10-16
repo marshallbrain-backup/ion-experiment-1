@@ -1,11 +1,6 @@
 package com.brain.ion
 
-import com.brain.ion.components.vectors.Rectangle
-import com.brain.ion.components.vectors.Style
-import com.brain.ion.graphics.Group
 import com.brain.ion.graphics.IonGraphics
-import java.awt.Graphics2D
-import java.awt.RenderingHints
 import java.awt.event.WindowEvent
 import java.awt.image.BufferStrategy
 
