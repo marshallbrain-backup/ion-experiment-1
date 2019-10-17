@@ -5,4 +5,9 @@ import com.brain.ion.properties.Renderable
 import com.brain.ion.properties.Styleable
 
 interface Vector : Component, Renderable{
+	
+	override fun getComponents(): List<Component> {
+		return listOf(this)
+	}
+	
 }
