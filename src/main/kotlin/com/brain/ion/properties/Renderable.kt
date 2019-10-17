@@ -1,4 +1,9 @@
 package com.brain.ion.properties
 
-interface Renderable {
+import java.awt.Shape
+
+interface Renderable : Styleable{
+	
+	val shape: Shape
+	
 }
