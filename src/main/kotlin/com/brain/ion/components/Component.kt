@@ -1,4 +1,11 @@
 package com.brain.ion.components
 
-interface Component {
+import com.brain.ion.properties.Renderable
+
+interface Component{
+	
+	val id: String
+	
+	fun clone()
+	
 }
