@@ -1,8 +1,10 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
+import com.brain.ion.properties.Renderable
+import com.brain.ion.properties.RenderableCollection
 import java.awt.*
-import java.awt.RenderingHints
 
 class IonGraphics(
 		private val bounds: Rectangle
@@ -22,41 +24,32 @@ class IonGraphics(
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
-	fun draw(component: Component) {
+	fun draw(component: RenderableCollection) {
 		
-//		for (c in component.getComponents()) {
-//			if (c is Vector) {
-//				draw(c,
-//						x.toDouble() + c.xOffset.toDouble(),
-//						y.toDouble() + c.yOffset.toDouble()
-//				)
-//			}
-//
-//			else {
-//				draw(c,
-//						x.toDouble() + c.xOffset.toDouble(),
-//						y.toDouble() + c.yOffset.toDouble()
-//				)
-//			}
-//		}
+		for (c in component.getComponents()) {
+			when(c) {
+				is Renderable -> draw(c)
+				is RenderableCollection -> draw(c)
+			}
+		}
 		
 	}
 	
-	fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
+	private fun draw(vector: Renderable, x: Number = 0, y: Number = 0) {
 		
-//		val g = graphics.create() as Graphics2D
-//		g.translate(x.toInt(), y.toInt())
-//
-//		g.color = vector.style.fillColor
-//		g.fill(vector.shape)
-//
-//		g.color = vector.style.strokeColor
-//		g.stroke = vector.style.strokeProp
-//
-//		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
-//			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-//		}
-//		g.draw(vector.shape)
+		val g = graphics.create() as Graphics2D
+		g.translate(x.toInt(), y.toInt())
+
+		g.color = vector.style.fillColor
+		g.fill(vector.getShape(this))
+
+		g.color = vector.style.strokeColor
+		g.stroke = vector.style.strokeProp
+
+		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
+			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		}
+		g.draw(vector.getShape(this))
 		
 	}
 	

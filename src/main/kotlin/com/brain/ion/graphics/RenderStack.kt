@@ -1,21 +1,11 @@
 package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
+import com.brain.ion.properties.RenderableCollection
 
 class RenderStack {
 	
 	private val groups = mutableMapOf<String, Group>()
-	
-	fun getGroupsCopy() : Map<String, Group> {
-		
-		val groupsCopy = mutableMapOf<String, Group>()
-		
-//		for ((id, g) in groups) {
-//			groupsCopy[id] = Group(g)
-//		}
-		
-		return groupsCopy.toMap()
-	}
 	
 	fun addGroup(group: Group): Boolean {
 		val o = groups.putIfAbsent(group.id, group)
@@ -31,11 +21,11 @@ class RenderStack {
 		return groups.remove(group.id, group)
 	}
 	
-	fun addToQueue(id: String, vararg components: Component) {
+	fun addToQueue(id: String, vararg components: RenderableCollection) {
 		groups[id]?.addToQueue(*components)
 	}
 	
-	fun removeFromQueue(id: String, vararg components: Component) {
+	fun removeFromQueue(id: String, vararg components: RenderableCollection) {
 		groups[id]?.removeFromQueue(*components)
 	}
 	
