@@ -1,4 +1,8 @@
 package com.brain.ion.components.vectors
 
-interface Vector {
+import com.brain.ion.components.Component
+import com.brain.ion.properties.Renderable
+import com.brain.ion.properties.Styleable
+
+interface Vector : Component, Renderable{
 }
