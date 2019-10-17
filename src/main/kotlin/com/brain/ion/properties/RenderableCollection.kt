@@ -1,7 +1,9 @@
 package com.brain.ion.properties
 
+import com.brain.ion.components.Component
+
 interface RenderableCollection {
 	
-	val renderList: MutableMap<String, Renderable>
+	fun getComponents(): List<Component>
 	
 }
