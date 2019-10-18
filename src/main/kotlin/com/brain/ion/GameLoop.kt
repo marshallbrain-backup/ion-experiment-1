@@ -4,7 +4,7 @@ import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 import java.awt.image.BufferStrategy
 
-class GameLoop(private val mainFrame: Frame, minorFrames: MutableList<Frame>) : Runnable {
+class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
