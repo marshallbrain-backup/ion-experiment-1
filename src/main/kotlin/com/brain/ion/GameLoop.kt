@@ -4,11 +4,26 @@ import com.brain.ion.graphics.IonGraphics
 import java.awt.event.WindowEvent
 import java.awt.image.BufferStrategy
 
+/**
+ * Creates a new loop that is limited to 60 ticks a second and 60 frames per second. The loop is ran in a separate
+ * thread to prevent the thread used to create the loop from stalling.
+ *
+ * @since 0.1
+ *
+ * @constructor Creates but does not start a new instance of the GameLoop class. To start the thread use the [start]
+ * function rather then the [run] function as the [run] function will do nothing
+ * @param mainFrame The main [Frame] that the program should use to display
+ * [Components][com.brain.ion.components.Component] to the screen
+ * @since 0.1
+ */
 class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
 	private val bs: BufferStrategy
+	/**
+	 * The graphics object used to draw to the [mainFrame]
+	 */
 	val graphics = IonGraphics(canvas.bounds)
 	
 	private var running = false
@@ -22,6 +37,9 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Used to start the loop in a new thread
+	 */
 	@Synchronized
 	fun start() {
 		
@@ -35,6 +53,9 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Used to stop the loop
+	 */
 	@Synchronized
 	fun stop() {
 		
@@ -51,6 +72,12 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Do not ues to start the loop as it will lock the rest of the program. Instead use the [start] function inorder
+	 * to start the loop as that will start the loop in a separate thread.
+	 *
+	 * @suppress
+	 */
 	override fun run() {
 		
 		val targetFps: Long = 60 //TARGET_FPS
@@ -109,6 +136,9 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Called every time the program needs to update.
+	 */
 	private fun tick() {
 		
 		canvas.keyListeners
@@ -119,6 +149,9 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Called every time the program needs to render.
+	 */
 	private fun render() {
 		
 		graphics.setGraphics(bs.drawGraphics)
@@ -129,6 +162,9 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 		
 	}
 	
+	/**
+	 * Displays the FPS and TPS information for the last second
+	 */
 	private fun displayUpdateInfo(tps: Int, fps: Int) {
 		
 		print("TPS - $tps; FPS - $fps\r")
