@@ -2,46 +2,68 @@ package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
 
+/**
+ *
+ *
+ * @since 0.1
+ */
 class RenderQueue {
 	
-	private val groups = mutableMapOf<String, Group>()
+	private val componentMap = mutableMapOf<String, Component>()
 	
-	fun getGroupsCopy(): Map<String, Group> {
+	/**
+	 *
+	 *
+	 * @since 0.1
+	 */
+	fun getComponentCopy(): Map<String, Component> {
 		
-		val groupsCopy = mutableMapOf<String, Group>()
+		val groupsCopy = mutableMapOf<String, Component>()
 		
-		for ((id, g) in groups) {
-			groupsCopy[id] = Group(g)
+		for ((id, c) in componentMap) {
+			groupsCopy[id] = c.clone()
 		}
 		
 		return groupsCopy.toMap()
 	}
 	
-	fun addGroup(group: Group): Boolean {
-		val o = groups.putIfAbsent(group.id, group)
+	/**
+	 *
+	 *
+	 * @since 0.1
+	 */
+	fun addComponent(component: Component): Boolean {
+		val o = componentMap.putIfAbsent(component.id, component)
 		return o == null
 	}
 	
-	fun removeRenderGroup(id: String): Boolean {
-		val g = groups[id] ?: return false
-		return removeRenderGroup(g)
+	/**
+	 *
+	 *
+	 * @since 0.1
+	 */
+	fun removeComponent(id: String): Boolean {
+		val g = componentMap[id] ?: return false
+		return removeComponent(g)
 	}
 	
-	fun removeRenderGroup(group: Group): Boolean {
-		return groups.remove(group.id, group)
+	/**
+	 *
+	 *
+	 * @since 0.1
+	 */
+	fun removeComponent(component: Component): Boolean {
+		return componentMap.remove(component.id, component)
 	}
 	
-	fun addToQueue(id: String, vararg components: Component) {
-		groups[id]?.addToQueue(*components)
-	}
-	
-	fun removeFromQueue(id: String, vararg components: Component) {
-		groups[id]?.removeFromQueue(*components)
-	}
-	
+	/**
+	 *
+	 *
+	 * @since 0.1
+	 */
 	fun render(graphics: IonGraphics) {
-		for ((i, g) in groups)
-			g.render(graphics)
+		for ((_, c) in componentMap)
+			graphics.draw(c)
 	}
 	
 }
