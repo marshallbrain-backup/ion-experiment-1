@@ -6,14 +6,14 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-internal class RenderStackTest {
+internal class RenderQueueTest {
 	
-	private lateinit var stack: RenderStack
+	private lateinit var queue: RenderQueue
 	private lateinit var rec: Rectangle
 	
 	@BeforeEach
 	fun init() {
-		stack = RenderStack()
+		queue = RenderQueue()
 		rec = Rectangle(width = 10, height = 10)
 	}
 	
@@ -22,9 +22,9 @@ internal class RenderStackTest {
 		@Test
 		fun `group is added`() {
 			val group = Group("test")
-			stack.addGroup(group)
+			queue.addGroup(group)
 			
-			val map = stack.getGroupsCopy()
+			val map = queue.getGroupsCopy()
 			
 			assertThat(map).containsValue(group)
 			assertThat(map).containsKey("test")
@@ -33,9 +33,9 @@ internal class RenderStackTest {
 		@Test
 		fun `id already exist`() {
 			val group = Group("test")
-			stack.addGroup(group)
+			queue.addGroup(group)
 			
-			assertThat(stack.addGroup(group)).isFalse()
+			assertThat(queue.addGroup(group)).isFalse()
 		}
 	}
 	
@@ -44,10 +44,10 @@ internal class RenderStackTest {
 		@Test
 		fun `group is removed using id`() {
 			val group = Group("test")
-			stack.addGroup(group)
-			stack.removeRenderGroup("test")
+			queue.addGroup(group)
+			queue.removeRenderGroup("test")
 			
-			val map = stack.getGroupsCopy()
+			val map = queue.getGroupsCopy()
 			
 			assertThat(map).doesNotContainValue(group)
 			assertThat(map).doesNotContainKey("test")
@@ -56,10 +56,10 @@ internal class RenderStackTest {
 		@Test
 		fun `group is removed using group instance`() {
 			val group = Group("test")
-			stack.addGroup(group)
-			stack.removeRenderGroup(group)
+			queue.addGroup(group)
+			queue.removeRenderGroup(group)
 			
-			val map = stack.getGroupsCopy()
+			val map = queue.getGroupsCopy()
 			
 			assertThat(map).doesNotContainValue(group)
 			assertThat(map).doesNotContainKey("test")
@@ -67,14 +67,14 @@ internal class RenderStackTest {
 		
 		@Test
 		fun `id does not exist`() {
-			assertThat(stack.removeRenderGroup("test")).isFalse()
+			assertThat(queue.removeRenderGroup("test")).isFalse()
 		}
 		
 		@Test
 		fun `group does not exist`() {
 			val group = Group("test")
 			
-			assertThat(stack.removeRenderGroup(group)).isFalse()
+			assertThat(queue.removeRenderGroup(group)).isFalse()
 		}
 	}
 	
@@ -83,8 +83,8 @@ internal class RenderStackTest {
 		@Test
 		fun `vector is added`() {
 			val group = Group("test")
-			stack.addGroup(group)
-			stack.addToQueue("test", rec)
+			queue.addGroup(group)
+			queue.addToQueue("test", rec)
 			
 			assertThat(group.getQueueCopy()).contains(rec)
 		}
@@ -95,9 +95,9 @@ internal class RenderStackTest {
 		@Test
 		fun `vector is removed`() {
 			val group = Group("test")
-			stack.addGroup(group)
-			stack.addToQueue("test", rec)
-			stack.removeFromQueue("test", rec)
+			queue.addGroup(group)
+			queue.addToQueue("test", rec)
+			queue.removeFromQueue("test", rec)
 			
 			assertThat(group.getQueueCopy()).doesNotContain(rec)
 		}

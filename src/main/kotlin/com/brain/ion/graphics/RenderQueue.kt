@@ -2,7 +2,7 @@ package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
 
-class RenderStack {
+class RenderQueue {
 	
 	private val groups = mutableMapOf<String, Group>()
 	
