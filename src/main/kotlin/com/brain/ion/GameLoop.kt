@@ -23,6 +23,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	private val bs: BufferStrategy
 	/**
 	 * The graphics object used to draw to the [mainFrame]
+	 *
+	 * @since 0.1
 	 */
 	val graphics = IonGraphics(canvas.bounds)
 	
@@ -39,6 +41,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	/**
 	 * Used to start the loop in a new thread
+	 *
+	 * @since 0.1
 	 */
 	@Synchronized
 	fun start() {
@@ -55,6 +59,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	/**
 	 * Used to stop the loop
+	 *
+	 * @since 0.1
 	 */
 	@Synchronized
 	fun stop() {
@@ -76,6 +82,7 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	 * Do not ues to start the loop as it will lock the rest of the program. Instead use the [start] function inorder
 	 * to start the loop as that will start the loop in a separate thread.
 	 *
+	 * @since 0.1
 	 * @suppress
 	 */
 	override fun run() {
@@ -138,6 +145,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	/**
 	 * Called every time the program needs to update.
+	 *
+	 * @since 0.1
 	 */
 	private fun tick() {
 		
@@ -151,6 +160,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	/**
 	 * Called every time the program needs to render.
+	 *
+	 * @since 0.1
 	 */
 	private fun render() {
 		
@@ -164,6 +175,8 @@ class GameLoop(private val mainFrame: Frame) : Runnable {
 	
 	/**
 	 * Displays the FPS and TPS information for the last second
+	 *
+	 * @since 0.1
 	 */
 	private fun displayUpdateInfo(tps: Int, fps: Int) {
 		
