@@ -4,6 +4,7 @@ import com.brain.ion.components.Component
 import java.awt.geom.Rectangle2D
 
 data class Rectangle(
+		override val id: String,
 		private val x: Number,
 		private val y: Number,
 		private val width: Number,
@@ -15,14 +16,14 @@ data class Rectangle(
 	
 	override var onClick: () -> Unit = {}
 	
-	constructor(width: Number, height: Number) :
-			this(0f, 0f, width, height)
+	constructor(id: String, width: Number, height: Number) :
+			this(id, 0f, 0f, width, height)
 	
-	constructor(width: Number, height: Number, style: Style) :
-			this(0f, 0f, width, height, style)
+	constructor(id: String, width: Number, height: Number, style: Style) :
+			this(id,0f, 0f, width, height, style)
 	
 	constructor(v: Rectangle) :
-			this(v.x, v.y, v.width, v.height, Style(v.style))
+			this(v.id, v.x, v.y, v.width, v.height, Style(v.style))
 	
 	override fun getComponents(): List<Component> {
 		return listOf(this)

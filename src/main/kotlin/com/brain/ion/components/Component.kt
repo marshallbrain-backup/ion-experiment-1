@@ -5,6 +5,7 @@ import java.awt.geom.Area
 
 interface Component {
 	
+	val id: String
 	var onClick: () -> Unit
 	
 	fun clone(): Component
