@@ -52,14 +52,14 @@ internal class PathTest {
 	
 	@Test
 	fun `path cloning`() {
-		val expected = Path().move(i, i)
+		val expected = Path("").move(i, i)
 		val actual = expected.clone()
 		
 		assertThat(actual).isEqualTo(expected)
 	}
 	
 	private fun actualSetup(v: Number): Path {
-		return Path()
+		return Path("")
 				.moveAbs(v, v).move(v, v)
 				.lineAbs(v, v).line(v, v)
 				.lineXAbs(v).lineX(v)

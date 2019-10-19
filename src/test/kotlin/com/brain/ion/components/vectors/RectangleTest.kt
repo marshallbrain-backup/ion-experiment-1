@@ -19,7 +19,7 @@ internal class RectangleTest {
 	inner class RectangleCreation {
 		@Test
 		fun `using ints`() {
-			val rec = Rectangle(i, i, i, i)
+			val rec = Rectangle("", i, i, i, i)
 			val actual = rec.shape
 			val expected = Rectangle2D.Double(i.toDouble(), i.toDouble(), i.toDouble(), i.toDouble())
 			
@@ -28,7 +28,7 @@ internal class RectangleTest {
 		
 		@Test
 		fun `using longs`() {
-			val rec = Rectangle(l, l, l, l)
+			val rec = Rectangle("", l, l, l, l)
 			val actual = rec.shape
 			val expected = Rectangle2D.Double(l.toDouble(), l.toDouble(), l.toDouble(), l.toDouble())
 			
@@ -37,7 +37,7 @@ internal class RectangleTest {
 		
 		@Test
 		fun `using floats`() {
-			val rec = Rectangle(f, f, f, f)
+			val rec = Rectangle("", f, f, f, f)
 			val actual = rec.shape
 			val expected = Rectangle2D.Double(f.toDouble(), f.toDouble(), f.toDouble(), f.toDouble())
 			
@@ -46,7 +46,7 @@ internal class RectangleTest {
 		
 		@Test
 		fun `using doubles`() {
-			val rec = Rectangle(d, d, d, d)
+			val rec = Rectangle("", d, d, d, d)
 			val actual = rec.shape
 			val expected = Rectangle2D.Double(d, d, d, d)
 			
@@ -56,7 +56,7 @@ internal class RectangleTest {
 	
 	@Test
 	fun `rectangle cloning`() {
-		val expected = Rectangle(i, i, i, i)
+		val expected = Rectangle("", i, i, i, i)
 		val actual = expected.clone()
 		
 		assertThat(actual).isEqualTo(expected)

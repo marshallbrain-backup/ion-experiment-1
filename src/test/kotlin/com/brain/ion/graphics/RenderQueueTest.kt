@@ -14,28 +14,26 @@ internal class RenderQueueTest {
 	@BeforeEach
 	fun init() {
 		queue = RenderQueue()
-		rec = Rectangle(width = 10, height = 10)
+		rec = Rectangle("test", width = 10, height = 10)
 	}
 	
 	@Nested
-	inner class AddGroup {
+	inner class AddComponent {
 		@Test
 		fun `group is added`() {
-			val group = Group("test")
-			queue.addGroup(group)
+			queue.addComponent(rec)
 			
-			val map = queue.getGroupsCopy()
+			val map = queue.getComponentCopy()
 			
-			assertThat(map).containsValue(group)
+			assertThat(map).containsValue(rec)
 			assertThat(map).containsKey("test")
 		}
 		
 		@Test
 		fun `id already exist`() {
-			val group = Group("test")
-			queue.addGroup(group)
+			queue.addComponent(rec)
 			
-			assertThat(queue.addGroup(group)).isFalse()
+			assertThat(queue.addComponent(rec)).isFalse()
 		}
 	}
 	
@@ -43,63 +41,35 @@ internal class RenderQueueTest {
 	inner class RemoveRenderGroup {
 		@Test
 		fun `group is removed using id`() {
-			val group = Group("test")
-			queue.addGroup(group)
-			queue.removeRenderGroup("test")
+			queue.addComponent(rec)
+			queue.removeComponent("test")
 			
-			val map = queue.getGroupsCopy()
+			val map = queue.getComponentCopy()
 			
-			assertThat(map).doesNotContainValue(group)
+			assertThat(map).doesNotContainValue(rec)
 			assertThat(map).doesNotContainKey("test")
 		}
 		
 		@Test
 		fun `group is removed using group instance`() {
-			val group = Group("test")
-			queue.addGroup(group)
-			queue.removeRenderGroup(group)
+			queue.addComponent(rec)
+			queue.removeComponent(rec)
 			
-			val map = queue.getGroupsCopy()
+			val map = queue.getComponentCopy()
 			
-			assertThat(map).doesNotContainValue(group)
+			assertThat(map).doesNotContainValue(rec)
 			assertThat(map).doesNotContainKey("test")
 		}
 		
 		@Test
 		fun `id does not exist`() {
-			assertThat(queue.removeRenderGroup("test")).isFalse()
+			assertThat(queue.removeComponent("test")).isFalse()
 		}
 		
 		@Test
 		fun `group does not exist`() {
-			val group = Group("test")
 			
-			assertThat(queue.removeRenderGroup(group)).isFalse()
-		}
-	}
-	
-	@Nested
-	inner class AddToQueue {
-		@Test
-		fun `vector is added`() {
-			val group = Group("test")
-			queue.addGroup(group)
-			queue.addToQueue("test", rec)
-			
-			assertThat(group.getQueueCopy()).contains(rec)
-		}
-	}
-	
-	@Nested
-	inner class RemoveFromQueue {
-		@Test
-		fun `vector is removed`() {
-			val group = Group("test")
-			queue.addGroup(group)
-			queue.addToQueue("test", rec)
-			queue.removeFromQueue("test", rec)
-			
-			assertThat(group.getQueueCopy()).doesNotContain(rec)
+			assertThat(queue.removeComponent(rec)).isFalse()
 		}
 	}
 }
