@@ -10,7 +10,7 @@ class IonGraphics(
 		private val bounds: Rectangle
 ) {
 	
-	val renderStack = RenderStack()
+	val renderQueue = RenderQueue()
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -54,7 +54,7 @@ class IonGraphics(
 	}
 	
 	fun render() {
-		renderStack.render(this)
+		renderQueue.render(this)
 	}
 
 }
