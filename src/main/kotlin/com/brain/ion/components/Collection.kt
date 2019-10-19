@@ -41,7 +41,15 @@ class Collection(
 	}
 	
 	override fun clone(): Component {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		
+		val componentsListClone = mutableListOf<Component>()
+		
+		for (c in components) {
+			componentsListClone.add(c.clone())
+		}
+		
+		return Collection(id, *componentsListClone.toTypedArray())
+		
 	}
 	
 }
