@@ -1,37 +1,25 @@
 package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
-import com.brain.ion.properties.RenderableCollection
 
 class RenderQueue {
 	
-	private val groups = mutableMapOf<String, Group>()
+	private val queue = linkedMapOf<String, Component>()
 	
-	fun addGroup(group: Group): Boolean {
-		val o = groups.putIfAbsent(group.id, group)
-		return o == null
+	fun addComponent(c: Component): Boolean {
+		TODO("not implemented")
 	}
 	
-	fun removeRenderGroup(id: String): Boolean {
-		val g = groups[id] ?: return false
-		return removeRenderGroup(g)
+	fun removeComponent(id: String): Boolean {
+		TODO("not implemented")
 	}
 	
-	fun removeRenderGroup(group: Group): Boolean {
-		return groups.remove(group.id, group)
-	}
-	
-	fun addToQueue(id: String, vararg components: RenderableCollection) {
-		groups[id]?.addToQueue(*components)
-	}
-	
-	fun removeFromQueue(id: String, vararg components: RenderableCollection) {
-		groups[id]?.removeFromQueue(*components)
+	fun removeComponent(c: Component): Boolean {
+		TODO("not implemented")
 	}
 	
 	fun render(graphics: IonGraphics) {
-		for ((i, g) in groups)
-			g.render(graphics)
+		TODO("not implemented")
 	}
 	
 }
