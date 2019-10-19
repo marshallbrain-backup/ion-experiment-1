@@ -5,6 +5,18 @@ import java.awt.Dimension
 import java.awt.Point
 import javax.swing.JFrame
 
+/**
+ * A [JFrame] manager
+ * @since 0.1
+ *
+ * @constructor Initializes a new [JFrame]
+ * @param x
+ * @param y
+ * @param width
+ * @param height
+ * @param name The name of the [JFrame]. Defaults to Ion
+ * @since 0.1
+ */
 class Frame(
 		x: Int,
 		y: Int,
@@ -14,7 +26,17 @@ class Frame(
 		decorated: Boolean = true
 ) {
 	
+	/**
+	 * The [JFrame] that this manages
+	 *
+	 * @since 0.1
+	 */
 	val frame = JFrame()
+	/**
+	 * The [Canvas] that is created for the [JFrame]
+	 *
+	 * @since 0.1
+	 */
 	val canvas = Canvas()
 	
 	init {
