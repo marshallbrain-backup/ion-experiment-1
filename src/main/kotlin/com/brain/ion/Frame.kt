@@ -6,11 +6,11 @@ import java.awt.Point
 import javax.swing.JFrame
 
 class Frame(
+		x: Int,
+		y: Int,
+		width: Int,
+		height: Int,
 		name: String = "Ion",
-		x: Int = 0,
-		y: Int = 0,
-		width: Int = 0,
-		height: Int = 0,
 		decorated: Boolean = true
 ) {
 	
