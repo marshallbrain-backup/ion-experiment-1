@@ -1,9 +1,5 @@
 package com.brain.ion.graphics
 
-import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
-import com.brain.ion.properties.Renderable
-import com.brain.ion.properties.RenderableCollection
 import java.awt.*
 
 class IonGraphics(
@@ -26,7 +22,7 @@ class IonGraphics(
 	
 	fun draw(component: RenderableCollection) {
 		
-		for (c in component.getComponents()) {
+		for (c in component.getCollection()) {
 			when(c) {
 				is Renderable -> draw(c)
 				is RenderableCollection -> draw(c)
