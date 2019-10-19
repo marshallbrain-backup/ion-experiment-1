@@ -5,8 +5,11 @@ import com.brain.ion.properties.FunctionVariable
 interface Component{
 	
 	val id: String
+	val emptyFunction: (Component) -> Unit
+		get() = {}
 	
-	fun assign(varMap: MutableMap<String, FunctionVariable>)
+	var onRender: (Component) -> Unit
+	
 	fun clone()
 	fun getCollection(): List<Component>
 	
