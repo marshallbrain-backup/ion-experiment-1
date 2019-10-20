@@ -1,12 +1,14 @@
 package com.brain.ion.graphics
 
+import com.brain.ion.components.Component
+import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
 class IonGraphics(
 		private val bounds: Rectangle
 ) {
 	
-	val renderQueue = RenderQueue()
+	val renderQueue: RenderQueue = RenderQueueImpl()
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -20,18 +22,24 @@ class IonGraphics(
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
-	fun draw(component: RenderableCollection) {
+	fun draw(component: Component) {
 		
-		for (c in component.getCollection()) {
-			when(c) {
-				is Renderable -> draw(c)
-				is RenderableCollection -> draw(c)
+		if(component is Vector) {
+			draw(component)
+		} else {
+			
+			for (c in component.getCollection()) {
+				when(c) {
+					is Vector -> draw(c)
+					else -> draw(c)
+				}
 			}
+			
 		}
 		
 	}
 	
-	private fun draw(vector: Renderable, x: Number = 0, y: Number = 0) {
+	private fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
 		
 		val g = graphics.create() as Graphics2D
 		g.translate(x.toInt(), y.toInt())
@@ -51,6 +59,58 @@ class IonGraphics(
 	
 	fun render() {
 		renderQueue.render(this)
+	}
+	
+	private class RenderQueueImpl(
+			private val queue: MutableList<Group> = mutableListOf()
+	): RenderQueue, List<Group> by queue {
+		
+		override fun newGroup(): Group {
+			val group = GroupImpl(queue.size)
+			queue.add(group)
+			return group
+		}
+		
+		override fun render(graphics: IonGraphics) {
+			for (g in queue) {
+				g.render(graphics)
+			}
+		}
+		
+	}
+	
+	private class GroupImpl(
+			private var pos: Int,
+			private val queue: MutableList<Renderable> = mutableListOf()
+	): Group, List<Renderable> by queue {
+		
+		override fun getPosition(): Int {
+			return pos
+		}
+		
+		override fun add(element: Component) {
+			queue.add(element)
+		}
+		
+		override fun add(index: Int, element: Component) {
+			queue.add(index, element)
+		}
+		
+		override fun newGroup(): Group {
+			val group = GroupImpl(queue.size)
+			queue.add(group)
+			return group
+		}
+		
+		override fun render(g: IonGraphics) {
+			for (c in queue) {
+				when(c) {
+					is Group -> c.render(g)
+					is Component -> g.draw(c)
+				}
+			}
+		}
+		
 	}
 
 }
