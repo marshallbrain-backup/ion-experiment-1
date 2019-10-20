@@ -7,24 +7,48 @@ import java.awt.geom.Rectangle2D
 
 class Rectangle(
 		override val id: String,
-		var x: Number,
-		var y: Number,
-		var width: Number,
-		var height: Number,
+		x: Number,
+		y: Number,
+		width: Number,
+		height: Number,
 		override var style: Style = Style()
 ) : Vector{
 	
-	override var onRender: (Component) -> Unit = emptyFunction
+	var x: Number = x
+		set(value) {
+			changed = true
+			field = value
+		}
+	var y: Number = y
+		set(value) {
+			changed = true
+			field = value
+		}
+	var width: Number = width
+		set(value) {
+			changed = true
+			field = value
+		}
+	var height: Number = height
+		set(value) {
+			changed = true
+			field = value
+		}
 	
+	override var onRender: (Component) -> Unit = emptyFunction
+	private var changed = false
 	private var shape: Rectangle2D =
 			Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
 	override fun getShape(g: IonGraphics): Shape {
 		if (onRender != emptyFunction) {
 			onRender.invoke(this)
+			changed = true
 		}
 		
-		shape.setFrame(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+		if(changed){
+			shape.setFrame(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+		}
 		
 		return shape
 	}
