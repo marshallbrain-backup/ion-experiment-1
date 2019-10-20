@@ -1,8 +1,8 @@
 package com.brain.ion.components
 
-import com.brain.ion.properties.FunctionVariable
+import com.brain.ion.graphics.Renderable
 
-interface Component{
+interface Component: Renderable {
 	
 	val id: String
 	val emptyFunction: (Component) -> Unit
