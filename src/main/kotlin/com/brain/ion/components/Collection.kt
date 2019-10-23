@@ -8,9 +8,7 @@ class Collection(
 	
 	override var onRender: (Component) -> Unit = emptyFunction
 	
-	override fun clone() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
+	constructor(c: Collection): this(c.id, *c.toTypedArray())
 	
 	override fun getCollection(): List<Component> {
 		if (onRender != emptyFunction) {
@@ -18,6 +16,10 @@ class Collection(
 		}
 		
 		return this.toList()
+	}
+	
+	override fun clone(): Component {
+		return Collection(this)
 	}
 	
 }

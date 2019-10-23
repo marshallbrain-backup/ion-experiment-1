@@ -14,6 +14,8 @@ class Ellipse(
 		override var style: Style = Style()
 ) : Vector{
 	
+	constructor(c: Ellipse): this(c.id, c.x, c.y, c.width, c.height, c.style)
+	
 	var x: Number = x
 		set(value) {
 			changed = true
@@ -53,8 +55,8 @@ class Ellipse(
 		return shape
 	}
 	
-	override fun clone() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun clone(): Component {
+		return Ellipse(this)
 	}
 	
 }

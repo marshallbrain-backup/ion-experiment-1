@@ -14,6 +14,8 @@ class Rectangle(
 		override var style: Style = Style()
 ) : Vector{
 	
+	constructor(c: Rectangle): this(c.id, c.x, c.y, c.width, c.height, c.style)
+	
 	var x: Number = x
 		set(value) {
 			changed = true
@@ -53,8 +55,8 @@ class Rectangle(
 		return shape
 	}
 	
-	override fun clone() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun clone(): Component {
+		return Rectangle(this)
 	}
 	
 }

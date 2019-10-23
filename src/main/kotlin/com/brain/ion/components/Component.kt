@@ -10,7 +10,7 @@ interface Component: Renderable {
 	
 	var onRender: (Component) -> Unit
 	
-	fun clone()
+	fun clone(): Component
 	fun getCollection(): List<Component>
 	
 }

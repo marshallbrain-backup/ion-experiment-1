@@ -49,6 +49,11 @@ class Path(
 		shape.cloneCoordList(constructPath(pathString))
 	}
 	
+	constructor(c: Path): this(c.id, c.style) {
+		shape.cloneCoordList(c.shape)
+		onRender = c.onRender
+	}
+	
 	override fun getShape(g: IonGraphics): Shape {
 		return shape
 	}
@@ -80,8 +85,8 @@ class Path(
 		shape.close(index, insert)
 	}
 	
-	override fun clone() {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+	override fun clone(): Component {
+		return Path(this)
 	}
 	
 	private class ShapeCustom(): ShapeImpl(){
