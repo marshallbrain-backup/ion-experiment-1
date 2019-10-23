@@ -8,7 +8,7 @@ interface Vector : Component{
 	
 	var style: Style
 	
-	fun getShape(g: IonGraphics): Shape
+	fun getShape(g: IonGraphics = IonGraphics()): Shape
 	
 	override fun getCollection(): List<Component> {
 		TODO("not implemented")

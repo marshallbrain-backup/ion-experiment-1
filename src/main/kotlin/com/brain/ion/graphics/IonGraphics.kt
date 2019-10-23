@@ -5,7 +5,7 @@ import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
 class IonGraphics(
-		private val bounds: Rectangle
+		private val bounds: Rectangle = Rectangle(0,0,0,0)
 ) {
 	
 	val renderQueue: RenderQueue = RenderQueueImpl()
