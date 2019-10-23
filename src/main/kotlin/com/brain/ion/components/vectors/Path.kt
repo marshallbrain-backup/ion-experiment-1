@@ -34,6 +34,32 @@ class Path(
 					'x' -> tempPath.line(x = par[0].toDouble())
 					'Y' -> tempPath.lineTo(y = par[0].toDouble())
 					'y' -> tempPath.line(y = par[0].toDouble())
+					'C' -> {
+						tempPath.bezierCurveTo(
+								par[0].toDouble(), par[1].toDouble(),
+								par[2].toDouble(), par[3].toDouble(),
+								par[4].toDouble(), par[5].toDouble()
+						)
+					}
+					'c' -> {
+						tempPath.bezierCurve(
+								par[0].toDouble(), par[1].toDouble(),
+								par[2].toDouble(), par[3].toDouble(),
+								par[4].toDouble(), par[5].toDouble()
+						)
+					}
+					'S' -> {
+						tempPath.bezierCurveTo(
+								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
+								x3 = par[2].toDouble(), y3 = par[3].toDouble()
+						)
+					}
+					's' -> {
+						tempPath.bezierCurve(
+								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
+								x3 = par[2].toDouble(), y3 = par[3].toDouble()
+						)
+					}
 					'z', 'Z' -> tempPath.close()
 				}
 			}
@@ -42,6 +68,7 @@ class Path(
 	}
 	
 	private val shape = ShapeCustom()
+	private val prevPoint = Point2D.Double()
 	
 	override var onRender: (Component) -> Unit = emptyFunction
 	
@@ -72,17 +99,49 @@ class Path(
 			type: Int = ADD, index: Int = shape.length
 	) {
 		shape.lineTo(x.toDouble(), y.toDouble(), type, index)
+		prevPoint.setLocation(x.toDouble(), y.toDouble())
 	}
 
-	fun line(
-			x: Number = 0, y: Number = 0, type: Int = ADD, index: Int = shape.length
-	) {
+	fun line(x: Number = 0, y: Number = 0, type: Int = ADD, index: Int = shape.length) {
 		val end = shape.currentPoint
 		shape.lineTo(end.x + x.toDouble(), end.y + y.toDouble(), type, index)
+		prevPoint.setLocation(x.toDouble(), y.toDouble())
+	}
+	
+	fun bezierCurveTo(
+			x1: Number = shape.currentPoint.x * 2 - prevPoint.x, y1: Number = shape.currentPoint.y * 2 - prevPoint.y,
+			x2: Number, y2: Number, x3: Number, y3: Number, type: Int = ADD, index: Int = shape.length
+	){
+		shape.curveTo(
+				x1.toDouble(), y1.toDouble(),
+				x2.toDouble(), y2.toDouble(),
+				x3.toDouble(), y3.toDouble(),
+				type, index
+		)
+		prevPoint.setLocation(x2.toDouble(), y2.toDouble())
+	}
+	
+	fun bezierCurve(
+			x1: Number = shape.currentPoint.x - prevPoint.x, y1: Number = shape.currentPoint.y - prevPoint.y,
+			x2: Number, y2: Number, x3: Number, y3: Number,
+			type: Int = ADD, index: Int = shape.length
+	){
+		val end = shape.currentPoint
+		shape.curveTo(
+				end.x + x1.toDouble(), end.y + y1.toDouble(),
+				end.x + x2.toDouble(), end.y + y2.toDouble(),
+				end.x + x3.toDouble(), end.y + y3.toDouble(),
+				type, index
+		)
+		prevPoint.setLocation(x2.toDouble(), y2.toDouble())
+	}
+	
+	fun quadCurve(){
+	
 	}
 
-	fun close(index: Int = -1, insert: Boolean = false) {
-		shape.close(index, insert)
+	fun close(type: Int = ADD, index: Int = shape.length) {
+		shape.close(type, index)
 	}
 	
 	override fun clone(): Component {
@@ -109,15 +168,21 @@ class Path(
 		fun cloneCoordList(clone: ShapeCustom) {
 			coordList.clear()
 			coordList.addAll(clone.coordList)
+			currentPoint.setLocation(getPointFromLast(coordList.last.coords))
+		}
+		
+		private fun getPointFromLast(l: DoubleArray): Point2D {
+			return Point2D.Double(l[l.size-2], l[l.size-1])
 		}
 		
 		fun moveTo(x: Double, y: Double, type: Int, index: Int) {
+			val array = doubleArrayOf(x, y)
 			when {
 				coordList[coordList.size-1].type == segMoveTo -> {
-					coordList[coordList.size-1] = CoordEntry(segMoveTo, doubleArrayOf(x, y))
+					coordList[coordList.size-1] = CoordEntry(segMoveTo, array)
 				}
-				type == 0 -> coordList.add(index, CoordEntry(segMoveTo, doubleArrayOf(x, y)))
-				type == 1 -> coordList[index] = CoordEntry(segMoveTo, doubleArrayOf(x, y))
+				type == 0 -> coordList.add(index, CoordEntry(segMoveTo, array))
+				type == 1 -> coordList[index] = CoordEntry(segMoveTo, array)
 				type == 2 -> coordList.removeAt(index)
 			}
 			currentPoint.setLocation(x, y)
@@ -125,9 +190,10 @@ class Path(
 		}
 		
 		fun lineTo(x: Double, y: Double, type: Int, index: Int) {
+			val array = doubleArrayOf(x, y)
 			when(type) {
-				0 -> coordList.add(index, CoordEntry(segLineTo, doubleArrayOf(x, y)))
-				1 -> coordList[index] = CoordEntry(segLineTo, doubleArrayOf(x, y))
+				0 -> coordList.add(index, CoordEntry(segLineTo, array))
+				1 -> coordList[index] = CoordEntry(segLineTo, array)
 				2 -> coordList.removeAt(index)
 			}
 			currentPoint.setLocation(x, y)
@@ -138,11 +204,13 @@ class Path(
 		           x2: Double, y2: Double,
 		           type: Int, index: Int
 		) {
+			val array = doubleArrayOf(x1, y1, x2, y2)
 			when(type) {
-				0 -> coordList.add(index, CoordEntry(segQuadTo, doubleArrayOf(x1, y1, x2, y2)))
-				1 -> coordList[index] = CoordEntry(segQuadTo, doubleArrayOf(x1, y1, x2, y2))
+				0 -> coordList.add(index, CoordEntry(segQuadTo, array))
+				1 -> coordList[index] = CoordEntry(segQuadTo, array)
 				2 -> coordList.removeAt(index)
 			}
+			currentPoint.setLocation(x2, y2)
 			update = true
 		}
 		
@@ -152,19 +220,22 @@ class Path(
 				x3: Double, y3: Double,
 				type: Int, index: Int
 		) {
+			val array = doubleArrayOf(x1, y1, x2, y2, x3, y3)
 			when(type) {
-				0 -> coordList.add(index, CoordEntry(segCubicTo, doubleArrayOf(x1, y1, x2, y2, x3, y3)))
-				1 -> coordList[index] = CoordEntry(segCubicTo, doubleArrayOf(x1, y1, x2, y2, x3, y3))
+				0 -> coordList.add(index, CoordEntry(segCubicTo, array))
+				1 -> coordList[index] = CoordEntry(segCubicTo, array)
 				2 -> coordList.removeAt(index)
 			}
+			currentPoint.setLocation(x3, y3)
 			update = true
 		}
 		
-		fun close(index: Int, insert: Boolean){
-			when {
-				index != -1 -> coordList[index] = CoordEntry(segClose, doubleArrayOf())
-				insert -> coordList.add(index, CoordEntry(segClose, doubleArrayOf()))
-				else -> coordList.add(CoordEntry(segClose, doubleArrayOf()))
+		fun close(type: Int, index: Int){
+			val array = doubleArrayOf(currentPoint.x, currentPoint.y)
+			when(type) {
+				0 -> coordList.add(index, CoordEntry(segClose, array))
+				1 -> coordList[index] = CoordEntry(segClose, array)
+				2 -> coordList.removeAt(index)
 			}
 			update = true
 		}
