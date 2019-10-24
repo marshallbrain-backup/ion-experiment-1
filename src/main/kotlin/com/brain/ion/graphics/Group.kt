@@ -2,11 +2,8 @@ package com.brain.ion.graphics
 
 import com.brain.ion.components.Component
 
-interface Group: Renderable, List<Renderable> {
+interface Group: Renderable, MutableList<Renderable> {
 	
-	fun getPosition(): Int
-	fun add(element: Component)
-	fun add(index: Int, element: Component)
-	fun newGroup(): Group
+	fun newGroup(add: Boolean = true): Group
 	fun render(graphics: IonGraphics)
 }

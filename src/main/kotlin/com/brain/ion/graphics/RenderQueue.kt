@@ -1,7 +1,7 @@
 package com.brain.ion.graphics
 
-interface RenderQueue {
+interface RenderQueue: MutableList<Renderable> {
 	
-	fun newGroup(): Group
+	fun newGroup(add: Boolean = true): Group
 	fun render(graphics: IonGraphics)
 }
