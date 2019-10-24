@@ -7,8 +7,8 @@ import java.awt.geom.Rectangle2D
 
 class Rectangle(
 		override val id: String,
-		x: Number,
-		y: Number,
+		x: Number = 0,
+		y: Number = 0,
 		width: Number,
 		height: Number,
 		override var style: Style = Style()
