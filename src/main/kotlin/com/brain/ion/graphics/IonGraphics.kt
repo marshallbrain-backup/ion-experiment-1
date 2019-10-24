@@ -4,36 +4,16 @@ import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
-/**
- * Extension of [Graphics2D] that simplifies the drawing of [Components][Component]
- *
- * @since 0.1
- *
- * @constructor
- * @param bounds The bounds of the [Frame]. Used to set the clip for the [Graphics2D] object
- * @since 0.1
- */
 class IonGraphics(
-		private val bounds: Rectangle
+		private val bounds: Rectangle = Rectangle(0,0,0,0)
 ) {
 	
-	/**
-	 * The queue that is used when rendering [Components][Component] to the screen.
-	 *
-	 * @since 0.1
-	 */
-	val renderQueue = RenderQueue()
+	val renderQueue: RenderQueue = RenderQueueImpl()
 	
 	private lateinit var graphics: Graphics2D
 	
-	/**
-	 * Sets the [Graphics2D] that should be used to draw [Components][Component] to the screen
-	 *
-	 * @param g the [Graphics2D] instance to be set
-	 * @since 0.1
-	 */
-	fun setGraphics(g: Graphics2D) {
-		graphics = g
+	fun setGraphics(g: Graphics) {
+		graphics = g.create() as Graphics2D
 		
 		graphics.color = Color.DARK_GRAY
 		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
@@ -42,56 +22,89 @@ class IonGraphics(
 		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
-	/**
-	 * Converts a [Graphics] to [Graphics2D] and calls [setGraphics]
-	 *
-	 * @see setGraphics
-	 * @since 0.1
-	 */
-	fun setGraphics(g: Graphics) {
-		setGraphics(g as Graphics2D)
-	}
-	
-	/**
-	 * Draws a [Component] using the given [Graphics2D] instance
-	 *
-	 * @param component The [Component] to draw
-	 * @since 0.1
-	 */
 	fun draw(component: Component) {
 		
-		for (c in component.getComponents()) {
-			if (c is Vector) draw(c)
-			else draw(c)
+		if(component is Vector) {
+			draw(component)
+		} else {
+			
+			for (c in component.getCollection()) {
+				when(c) {
+					is Vector -> draw(c)
+					else -> draw(c)
+				}
+			}
+			
 		}
 		
 	}
 	
-	/**
-	 * Draws a [Vector] using the given [Graphics2D] instance
-	 *
-	 * @param vector The [Vector] to draw
-	 * @since 0.1
-	 */
-	fun draw(vector: Vector) {
+	private fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
 		
-		graphics.color = vector.style.fillColor
-		graphics.fill(vector.shape)
-		
-		graphics.color = vector.style.strokeColor
-		graphics.stroke = vector.style.strokeProp
-		graphics.draw(vector.shape)
+		val g = graphics.create() as Graphics2D
+		g.translate(x.toInt(), y.toInt())
+
+		g.color = vector.style.fillColor
+		g.fill(vector.getShape(this))
+
+		g.color = vector.style.strokeColor
+		g.stroke = vector.style.strokeProp
+
+		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
+			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		}
+		g.draw(vector.getShape(this))
 		
 	}
 	
-	/**
-	 * Renders whatever is in the [renderQueue]
-	 *
-	 * @see [renderQueue]
-	 * @since 0.1
-	 */
 	fun render() {
 		renderQueue.render(this)
 	}
 	
+	private class RenderQueueImpl(
+			private val queue: MutableList<Renderable> = mutableListOf()
+	): RenderQueue, MutableList<Renderable> by queue {
+		
+		override fun newGroup(add: Boolean): Group {
+			val group = GroupImpl()
+			if(add){
+				queue.add(group)
+			}
+			return group
+		}
+		
+		override fun render(g: IonGraphics) {
+			for (c in queue) {
+				when(c) {
+					is Group -> c.render(g)
+					is Component -> g.draw(c)
+				}
+			}
+		}
+		
+	}
+	
+	private class GroupImpl(
+			private val queue: MutableList<Renderable> = mutableListOf()
+	): Group, MutableList<Renderable> by queue {
+		
+		override fun newGroup(add: Boolean): Group {
+			val group = GroupImpl()
+			if(add){
+				queue.add(group)
+			}
+			return group
+		}
+		
+		override fun render(g: IonGraphics) {
+			for (c in queue) {
+				when(c) {
+					is Group -> c.render(g)
+					is Component -> g.draw(c)
+				}
+			}
+		}
+		
+	}
+
 }
