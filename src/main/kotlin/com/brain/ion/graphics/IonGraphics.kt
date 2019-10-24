@@ -3,13 +3,12 @@ package com.brain.ion.graphics
 import com.brain.ion.components.Component
 import com.brain.ion.components.vectors.Vector
 import java.awt.*
-import java.awt.RenderingHints
 
 class IonGraphics(
-		private val bounds: Rectangle
+		private val bounds: Rectangle = Rectangle(0,0,0,0)
 ) {
 	
-	val renderStack = RenderStack()
+	val renderQueue: RenderQueue = RenderQueueImpl()
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -25,35 +24,87 @@ class IonGraphics(
 	
 	fun draw(component: Component) {
 		
-		for (c in component.getComponents()) {
-			if (c is Vector) {
-				draw(c)
-			} else {
-				draw(c)
+		if(component is Vector) {
+			draw(component)
+		} else {
+			
+			for (c in component.getCollection()) {
+				when(c) {
+					is Vector -> draw(c)
+					else -> draw(c)
+				}
+			}
+			
+		}
+		
+	}
+	
+	private fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
+		
+		val g = graphics.create() as Graphics2D
+		g.translate(x.toInt(), y.toInt())
+
+		g.color = vector.style.fillColor
+		g.fill(vector.getShape(this))
+
+		g.color = vector.style.strokeColor
+		g.stroke = vector.style.strokeProp
+
+		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
+			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		}
+		g.draw(vector.getShape(this))
+		
+	}
+	
+	fun render() {
+		renderQueue.render(this)
+	}
+	
+	private class RenderQueueImpl(
+			private val queue: MutableList<Renderable> = mutableListOf()
+	): RenderQueue, MutableList<Renderable> by queue {
+		
+		override fun newGroup(add: Boolean): Group {
+			val group = GroupImpl()
+			if(add){
+				queue.add(group)
+			}
+			return group
+		}
+		
+		override fun render(g: IonGraphics) {
+			for (c in queue) {
+				when(c) {
+					is Group -> c.render(g)
+					is Component -> g.draw(c)
+				}
 			}
 		}
 		
 	}
 	
-	fun draw(vector: Vector) {
+	private class GroupImpl(
+			private val queue: MutableList<Renderable> = mutableListOf()
+	): Group, MutableList<Renderable> by queue {
 		
-		val g = graphics.create() as Graphics2D
-		
-		g.color = vector.style.fillColor
-		g.fill(vector.shape)
-		
-		g.color = vector.style.strokeColor
-		g.stroke = vector.style.strokeProp
-		
-		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
-			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+		override fun newGroup(add: Boolean): Group {
+			val group = GroupImpl()
+			if(add){
+				queue.add(group)
+			}
+			return group
 		}
-		g.draw(vector.shape)
 		
-	}
-	
-	fun render() {
-		renderStack.render(this)
+		override fun render(g: IonGraphics) {
+			for (c in queue) {
+				when(c) {
+					is Group -> c.render(g)
+					is Component -> g.draw(c)
+				}
+			}
+		}
+		
 	}
 
 }

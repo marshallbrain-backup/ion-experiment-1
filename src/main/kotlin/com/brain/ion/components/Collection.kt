@@ -1,38 +1,25 @@
 package com.brain.ion.components
 
-import com.brain.ion.components.properties.Property
-import java.awt.geom.Area
-
 class Collection(
 		override val id: String,
-		vararg component: Component
-) : Component {
+		vararg components: Component,
+		componentList: MutableList<Component> = mutableListOf(*components)
+) : Component, MutableList<Component> by componentList{
 	
-	override val properties = mutableListOf<Property>()
-	private val components = mutableListOf(*component)
-	private val interactArea = Area()
+	override var onRender: (Component) -> Unit = emptyFunction
 	
-	override fun getComponents(): List<Component> {
-		return components.toList()
-	}
+	constructor(c: Collection): this(c.id, *c.toTypedArray())
 	
-	fun addComponents(vararg component: Component) {
-		components.addAll(component)
-		interactArea.reset()
-	}
-	
-	fun removeComponents(vararg component: Component) {
-		components.addAll(component)
-		interactArea.reset()
-	}
-	
-	fun resetComponents() {
-		components.clear()
-		interactArea.reset()
+	override fun getCollection(): List<Component> {
+		if (onRender != emptyFunction) {
+			onRender.invoke(this)
+		}
+		
+		return this.toList()
 	}
 	
 	override fun clone(): Component {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		return Collection(this)
 	}
 	override fun clone(properties: Map<String, () -> Any>): Component {
 		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

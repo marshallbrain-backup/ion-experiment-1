@@ -3,18 +3,18 @@ package com.brain.ion.components.vectors
 import com.brain.ion.components.Component
 import com.brain.ion.graphics.IonGraphics
 import java.awt.Shape
-import java.awt.geom.Rectangle2D
+import java.awt.geom.Ellipse2D
 
-class Rectangle(
+class Ellipse(
 		override val id: String,
-		x: Number = 0,
-		y: Number = 0,
+		x: Number,
+		y: Number,
 		width: Number,
 		height: Number,
 		override var style: Style = Style()
 ) : Vector{
 	
-	constructor(c: Rectangle): this(c.id, c.x, c.y, c.width, c.height, c.style)
+	constructor(c: Ellipse): this(c.id, c.x, c.y, c.width, c.height, c.style)
 	
 	var x: Number = x
 		set(value) {
@@ -39,8 +39,8 @@ class Rectangle(
 	
 	override var onRender: (Component) -> Unit = emptyFunction
 	private var changed = false
-	private var shape: Rectangle2D =
-			Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+	private var shape: Ellipse2D =
+			Ellipse2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
 	override fun getShape(g: IonGraphics): Shape {
 		if (onRender != emptyFunction) {
@@ -56,7 +56,7 @@ class Rectangle(
 	}
 	
 	override fun clone(): Component {
-		return Rectangle(this)
+		return Ellipse(this)
 	}
 	
 }

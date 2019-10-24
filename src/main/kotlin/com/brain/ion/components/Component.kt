@@ -1,21 +1,16 @@
 package com.brain.ion.components
 
-import com.brain.ion.components.properties.Property
-import java.awt.Point
-import java.awt.geom.Area
+import com.brain.ion.graphics.Renderable
 
-//TODO text
-//TODO animations
-interface Component {
+interface Component: Renderable {
 	
 	val id: String
-	val properties: MutableList<Property>
+	val emptyFunction: (Component) -> Unit
+		get() = {}
+	
+	var onRender: (Component) -> Unit
 	
 	fun clone(): Component
+	fun getCollection(): List<Component>
 	
-	fun getComponents(): List<Component> {
-		return listOf()
-	}
-	fun clone(properties: Map<String, () -> Any>): Component
-
 }
