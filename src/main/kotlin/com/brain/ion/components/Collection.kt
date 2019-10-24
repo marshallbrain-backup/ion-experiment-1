@@ -21,8 +21,5 @@ class Collection(
 	override fun clone(): Component {
 		return Collection(this)
 	}
-	override fun clone(properties: Map<String, () -> Any>): Component {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-	}
 	
 }
