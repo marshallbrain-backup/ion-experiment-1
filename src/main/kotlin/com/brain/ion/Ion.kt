@@ -1,12 +1,7 @@
 package com.brain.ion
 
-import com.brain.ion.components.Component
-import com.brain.ion.components.vectors.Vector
-import com.brain.ion.graphics.IonGraphics
-import java.awt.event.MouseEvent
-import java.awt.event.MouseListener
-import java.awt.geom.Area
-import java.awt.geom.Point2D
+import com.brain.ion.handler.EventHandler
+import com.brain.ion.handler.MouseHandler
 
 class Ion (
 		name: String = "ion",
@@ -19,9 +14,11 @@ class Ion (
 	private val mainFrame = Frame(name, x, y, width, height)
 	private val minorFrames = mutableListOf<Frame>()
 	private val gameLoop = GameLoop(mainFrame, minorFrames)
-	private val mouse = Mouse()
 	
 	val ionGraphics = gameLoop.graphics
+	val eventHandler = EventHandler()
+	
+	private val mouse = MouseHandler(ionGraphics.renderQueue)
 	
 	init {
 		
