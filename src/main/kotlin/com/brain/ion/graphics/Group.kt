@@ -4,6 +4,9 @@ import com.brain.ion.components.Component
 
 interface Group: Renderable, MutableList<Renderable> {
 	
-	fun newGroup(add: Boolean = true): Group
+	val index: Int
+	val parent: Renderable?
+	
+	fun newGroup(): Group
 	fun render(graphics: IonGraphics)
 }

@@ -61,15 +61,15 @@ class IonGraphics(
 		renderQueue.render(this)
 	}
 	
-	private class RenderQueueImpl(
+	private class GroupImpl(
+			override val index: Int,
+			override val parent: Renderable,
 			private val queue: MutableList<Renderable> = mutableListOf()
-	): RenderQueue, MutableList<Renderable> by queue {
+	): Group, MutableList<Renderable> by queue {
 		
-		override fun newGroup(add: Boolean): Group {
-			val group = GroupImpl()
-			if(add){
-				queue.add(group)
-			}
+		override fun newGroup(): Group {
+			val group = GroupImpl(size, this)
+			queue.add(group)
 			return group
 		}
 		
