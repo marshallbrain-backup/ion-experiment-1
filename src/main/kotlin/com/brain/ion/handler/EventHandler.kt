@@ -1,15 +1,15 @@
 package com.brain.ion.handler
 
 class EventHandler(
-		private val map: MutableMap<Int, MutableSet<(Any) -> Unit>> = mutableMapOf()
-) : Map<Int, MutableSet<(Any) -> Unit>> by map {
+		private val map: MutableMap<Event, MutableSet<(Any) -> Unit>> = mutableMapOf()
+) : Map<Event, MutableSet<(Any) -> Unit>> by map {
 	
-	fun add(target: Int, trigger: (Any) -> Unit) {
+	fun add(target: Event, trigger: (Any) -> Unit) {
 		val list = map.getOrPut(target) { mutableSetOf() }
 		list.add(trigger)
 	}
 	
-	fun trigger(source: Any, target: Int) {
+	fun trigger(source: Any, target: Event) {
 		get(target)?.forEach { it.invoke(source) }
 	}
 	
