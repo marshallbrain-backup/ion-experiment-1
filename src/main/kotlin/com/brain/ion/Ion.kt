@@ -31,40 +31,4 @@ class Ion (
 		
 	}
 	
-	fun registerMouseEvent(area: Vector, function: (Point2D) -> Unit){
-		mouse.addCall(MouseCall(Area(area.getShape()), function))
-	}
-	
-	private data class MouseCall(val area: Area, val function: (Point2D) -> Unit)
-	
-	private class Mouse() : MouseListener {
-		
-		val mouseCallList = mutableListOf<MouseCall>()
-		
-		fun addCall(mouseCall: MouseCall) {
-			mouseCallList.add(mouseCall)
-		}
-		
-		override fun mouseClicked(e: MouseEvent) {
-			for (m in mouseCallList) {
-				if (m.area.contains(e.point)) {
-					m.function.invoke(e.point)
-				}
-			}
-		}
-		
-		override fun mousePressed(p0: MouseEvent?) {
-		}
-		
-		override fun mouseReleased(p0: MouseEvent?) {
-		}
-		
-		override fun mouseEntered(p0: MouseEvent?) {
-		}
-		
-		override fun mouseExited(p0: MouseEvent?) {
-		}
-		
-	}
-
 }
