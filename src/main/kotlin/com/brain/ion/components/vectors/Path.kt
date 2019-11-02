@@ -12,65 +12,13 @@ class Path(
 		override var style: Style
 ) : Vector {
 	
-	companion object {
-		const val ADD: Int = 0
-		const val SET: Int = 1
-		const val REMOVE: Int = 2
-		
-		private fun constructPath(pathString: String): ShapeCustom {
-			
-			val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
-			val tempPath = Path("", Style())
-			for (s in pathList) {
-				val form = s.replace("\\s+", "")
-				val type = form[0]
-				val par = form.removePrefix("$type(").removeSuffix(")").split(",")
-				when (type) {
-					'M' -> tempPath.moveTo(par[0].toDouble(), par[1].toDouble())
-					'm' -> tempPath.move(par[0].toDouble(), par[1].toDouble())
-					'L' -> tempPath.lineTo(par[0].toDouble(), par[1].toDouble())
-					'l' -> tempPath.line(par[0].toDouble(), par[1].toDouble())
-					'X' -> tempPath.lineTo(x = par[0].toDouble())
-					'x' -> tempPath.line(x = par[0].toDouble())
-					'Y' -> tempPath.lineTo(y = par[0].toDouble())
-					'y' -> tempPath.line(y = par[0].toDouble())
-					'C' -> {
-						tempPath.bezierCurveTo(
-								par[0].toDouble(), par[1].toDouble(),
-								par[2].toDouble(), par[3].toDouble(),
-								par[4].toDouble(), par[5].toDouble()
-						)
-					}
-					'c' -> {
-						tempPath.bezierCurve(
-								par[0].toDouble(), par[1].toDouble(),
-								par[2].toDouble(), par[3].toDouble(),
-								par[4].toDouble(), par[5].toDouble()
-						)
-					}
-					'S' -> {
-						tempPath.bezierCurveTo(
-								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
-								x3 = par[2].toDouble(), y3 = par[3].toDouble()
-						)
-					}
-					's' -> {
-						tempPath.bezierCurve(
-								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
-								x3 = par[2].toDouble(), y3 = par[3].toDouble()
-						)
-					}
-					'z', 'Z' -> tempPath.close()
-				}
-			}
-			return tempPath.shape
-		}
-	}
-	
 	private val shape = ShapeCustom()
 	private val prevPoint = Point2D.Double()
 	
+	override var x: Number = 0
+	override var y: Number = 0
 	override var onRender: (Component) -> Unit = emptyFunction
+	override var onClick: (Point2D) -> Unit = {}
 	
 	constructor(id: String, style: Style, pathString: String): this(id, style) {
 		shape.cloneCoordList(constructPath(pathString))
@@ -81,7 +29,7 @@ class Path(
 		onRender = c.onRender
 	}
 	
-	override fun getShape(g: IonGraphics): Shape {
+	override fun getShape(): Shape {
 		return shape
 	}
 	
@@ -146,6 +94,61 @@ class Path(
 	
 	override fun clone(): Component {
 		return Path(this)
+	}
+	
+	companion object {
+		const val ADD: Int = 0
+		const val SET: Int = 1
+		const val REMOVE: Int = 2
+		
+		private fun constructPath(pathString: String): ShapeCustom {
+			
+			val pathList = pathString.trimEnd(';').split(";").map { it.trim() }
+			val tempPath = Path("", Style())
+			for (s in pathList) {
+				val form = s.replace("\\s+", "")
+				val type = form[0]
+				val par = form.removePrefix("$type(").removeSuffix(")").split(",")
+				when (type) {
+					'M' -> tempPath.moveTo(par[0].toDouble(), par[1].toDouble())
+					'm' -> tempPath.move(par[0].toDouble(), par[1].toDouble())
+					'L' -> tempPath.lineTo(par[0].toDouble(), par[1].toDouble())
+					'l' -> tempPath.line(par[0].toDouble(), par[1].toDouble())
+					'X' -> tempPath.lineTo(x = par[0].toDouble())
+					'x' -> tempPath.line(x = par[0].toDouble())
+					'Y' -> tempPath.lineTo(y = par[0].toDouble())
+					'y' -> tempPath.line(y = par[0].toDouble())
+					'C' -> {
+						tempPath.bezierCurveTo(
+								par[0].toDouble(), par[1].toDouble(),
+								par[2].toDouble(), par[3].toDouble(),
+								par[4].toDouble(), par[5].toDouble()
+						)
+					}
+					'c' -> {
+						tempPath.bezierCurve(
+								par[0].toDouble(), par[1].toDouble(),
+								par[2].toDouble(), par[3].toDouble(),
+								par[4].toDouble(), par[5].toDouble()
+						)
+					}
+					'S' -> {
+						tempPath.bezierCurveTo(
+								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
+								x3 = par[2].toDouble(), y3 = par[3].toDouble()
+						)
+					}
+					's' -> {
+						tempPath.bezierCurve(
+								x2 = par[0].toDouble(), y2 = par[1].toDouble(),
+								x3 = par[2].toDouble(), y3 = par[3].toDouble()
+						)
+					}
+					'z', 'Z' -> tempPath.close()
+				}
+			}
+			return tempPath.shape
+		}
 	}
 	
 	private class ShapeCustom(): ShapeImpl(){

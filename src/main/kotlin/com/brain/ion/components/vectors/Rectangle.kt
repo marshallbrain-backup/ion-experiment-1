@@ -3,6 +3,7 @@ package com.brain.ion.components.vectors
 import com.brain.ion.components.Component
 import com.brain.ion.graphics.IonGraphics
 import java.awt.Shape
+import java.awt.geom.Point2D
 import java.awt.geom.Rectangle2D
 
 class Rectangle(
@@ -16,16 +17,8 @@ class Rectangle(
 	
 	constructor(c: Rectangle): this(c.id, c.x, c.y, c.width, c.height, c.style)
 	
-	var x: Number = x
-		set(value) {
-			changed = true
-			field = value
-		}
-	var y: Number = y
-		set(value) {
-			changed = true
-			field = value
-		}
+	override var x: Number = x
+	override var y: Number = y
 	var width: Number = width
 		set(value) {
 			changed = true
@@ -38,18 +31,19 @@ class Rectangle(
 		}
 	
 	override var onRender: (Component) -> Unit = emptyFunction
+	override var onClick: (Point2D) -> Unit = {}
 	private var changed = false
 	private var shape: Rectangle2D =
-			Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+			Rectangle2D.Double(0.0, 0.0, width.toDouble(), height.toDouble())
 	
-	override fun getShape(g: IonGraphics): Shape {
+	override fun getShape(): Shape {
 		if (onRender != emptyFunction) {
 			onRender.invoke(this)
 			changed = true
 		}
 		
 		if(changed){
-			shape.setFrame(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
+			shape.setFrame(0.0, 0.0, width.toDouble(), height.toDouble())
 		}
 		
 		return shape
