@@ -31,6 +31,10 @@ class IonGraphics(
 	
 	fun draw(component: Component, baseX: Number = 0, baseY: Number = 0) {
 		
+		if (!component.visible) {
+			return
+		}
+		
 		val x = baseX + component.x
 		val y = baseY + component.y
 		
@@ -50,6 +54,10 @@ class IonGraphics(
 	}
 	
 	private fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
+		
+		if(!vector.visible) {
+			return
+		}
 		
 		val graphics = graphics
 		graphics.translate(x.toDouble() + vector.x.toDouble(), y.toDouble() + vector.y.toDouble())
