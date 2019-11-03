@@ -9,7 +9,7 @@ import java.util.*
 
 class Path(
 		override val id: String,
-		override var style: Style
+		override var style: Style = Style()
 ) : Vector {
 	
 	private val shape = ShapeCustom()
@@ -22,6 +22,10 @@ class Path(
 	
 	constructor(id: String, style: Style, pathString: String): this(id, style) {
 		shape.cloneCoordList(constructPath(pathString))
+	}
+	
+	constructor(id: String, style: Style, path: Shape) : this(id, style){
+		shape.cloneCoordList(path.getPathIterator(null))
 	}
 	
 	constructor(c: Path): this(c.id, c.style) {
@@ -171,6 +175,18 @@ class Path(
 		fun cloneCoordList(clone: ShapeCustom) {
 			coordList.clear()
 			coordList.addAll(clone.coordList)
+			currentPoint.setLocation(getPointFromLast(coordList.last.coords))
+		}
+		
+		fun cloneCoordList(clone: PathIterator) {
+			coordList.clear()
+			
+			do {
+				val array = DoubleArray(6)
+				coordList.add(CoordEntry(clone.currentSegment(array).toByte(), array))
+				clone.next()
+			} while (!clone.isDone)
+			
 			currentPoint.setLocation(getPointFromLast(coordList.last.coords))
 		}
 		
