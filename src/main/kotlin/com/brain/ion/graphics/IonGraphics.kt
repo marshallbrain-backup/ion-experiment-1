@@ -92,7 +92,7 @@ class IonGraphics(
 		}
 		
 		override fun render(g: IonGraphics) {
-			for (c in queue) {
+			for (c in queue.toList()) {
 				when(c) {
 					is Group -> c.render(g)
 					is Component -> g.draw(c)
