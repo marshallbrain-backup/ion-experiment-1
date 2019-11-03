@@ -14,6 +14,6 @@ interface Component: Renderable {
 	var y: Number
 	
 	fun clone(): Component
-	fun getCollection(g: IonGraphics = IonGraphics()): List<Component>
+	fun getCollection(graphics: IonGraphics = IonGraphics()): List<Component>
 	
 }

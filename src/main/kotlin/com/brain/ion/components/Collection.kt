@@ -14,7 +14,11 @@ class Collection(
 	
 	constructor(c: Collection): this(c.id, *c.toTypedArray(), x = c.x, y = c.y)
 	
-	override fun getCollection(g: IonGraphics): List<Component> {
+	fun addAll(vararg components: Component) {
+		addAll(components)
+	}
+	
+	override fun getCollection(graphics: IonGraphics): List<Component> {
 		if (onRender != emptyFunction) {
 			onRender.invoke(this)
 		}

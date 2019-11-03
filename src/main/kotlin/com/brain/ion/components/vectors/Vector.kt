@@ -15,7 +15,7 @@ interface Vector : Component, Clickable{
 	
 	fun getShape(): Shape
 	
-	override fun getCollection(g: IonGraphics): List<Component> {
+	override fun getCollection(graphics: IonGraphics): List<Component> {
 		TODO("not implemented")
 	}
 	
