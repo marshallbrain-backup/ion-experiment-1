@@ -8,8 +8,7 @@ class IonGraphics(
 		private val bounds: Rectangle = Rectangle(0, 0, 0, 0)
 ) {
 	
-	private val dummyGroup: Group = DummyGroup(0, null)
-	val renderQueue: Group = dummyGroup.newGroup()
+	val renderQueue: Group = GroupImpl(0, null)
 	
 	private lateinit var graphics: Graphics2D
 	
@@ -88,23 +87,6 @@ class IonGraphics(
 					is Component -> g.draw(c)
 				}
 			}
-		}
-		
-	}
-	
-	private class DummyGroup(
-			override val index: Int,
-			override val parent: Renderable?,
-			private val queue: MutableList<Renderable> = mutableListOf()
-	): Group, MutableList<Renderable> by queue {
-		
-		private val group = GroupImpl(size, this)
-		
-		override fun newGroup(): Group {
-			return group
-		}
-		
-		override fun render(g: IonGraphics) {
 		}
 		
 	}
