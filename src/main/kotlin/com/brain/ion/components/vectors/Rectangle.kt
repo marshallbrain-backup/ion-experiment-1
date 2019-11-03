@@ -12,7 +12,8 @@ class Rectangle(
 		y: Number = 0,
 		width: Number,
 		height: Number,
-		override var style: Style = Style()
+		override var style: Style = Style(),
+		override var visible: Boolean = true
 ) : Vector{
 	
 	constructor(c: Rectangle): this(c.id, c.x, c.y, c.width, c.height, c.style)

@@ -9,7 +9,8 @@ import java.util.*
 
 class Path(
 		override val id: String,
-		override var style: Style = Style()
+		override var style: Style = Style(),
+		override var visible: Boolean = true
 ) : Vector {
 	
 	private val shape = ShapeCustom()

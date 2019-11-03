@@ -12,7 +12,8 @@ class Ellipse(
 		y: Number,
 		width: Number,
 		height: Number,
-		override var style: Style = Style()
+		override var style: Style = Style(),
+		override var visible: Boolean = true
 ) : Vector{
 	
 	constructor(c: Ellipse): this(c.id, c.x, c.y, c.width, c.height, c.style)

@@ -9,6 +9,7 @@ interface Component: Renderable {
 	val emptyFunction: (Component) -> Unit
 		get() = {}
 	
+	var visible: Boolean
 	var onRender: (Component) -> Unit
 	var x: Number
 	var y: Number

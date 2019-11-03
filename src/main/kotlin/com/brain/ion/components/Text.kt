@@ -10,7 +10,8 @@ class Text(
 		t: String = "",
 		override var x: Number = 0,
 		override var y: Number = 0,
-		var style: Style = Style()
+		var style: Style = Style(),
+		override var visible: Boolean = true
 ) : Component {
 	
 	override var onRender: (Component) -> Unit = emptyFunction
