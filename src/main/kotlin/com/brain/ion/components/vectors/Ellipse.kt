@@ -18,7 +18,15 @@ class Ellipse(
 	constructor(c: Ellipse): this(c.id, c.x, c.y, c.width, c.height, c.style)
 	
 	override var x: Number = x
+		set(value) {
+			changed = true
+			field = value
+		}
 	override var y: Number = y
+		set(value) {
+			changed = true
+			field = value
+		}
 	var width: Number = width
 		set(value) {
 			changed = true
@@ -34,7 +42,7 @@ class Ellipse(
 	override var onClick: (Point2D) -> Unit = clickEmpty
 	private var changed = false
 	private var shape: Ellipse2D =
-			Ellipse2D.Double(0.0, 0.0, width.toDouble(), height.toDouble())
+			Ellipse2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
 	override fun getShape(): Shape {
 		if (onRender != renderEmpty) {

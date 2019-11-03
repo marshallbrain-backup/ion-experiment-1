@@ -60,7 +60,7 @@ class IonGraphics(
 		}
 		
 		val graphics = graphics
-		graphics.translate(x.toDouble() + vector.x.toDouble(), y.toDouble() + vector.y.toDouble())
+		graphics.translate(x.toDouble(), y.toDouble())
 
 		graphics.color = vector.style.fillColor
 		graphics.fill(vector.getShape())

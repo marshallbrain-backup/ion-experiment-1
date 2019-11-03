@@ -34,7 +34,7 @@ class Rectangle(
 	override var onClick: (Point2D) -> Unit = clickEmpty
 	private var changed = false
 	private var shape: Rectangle2D =
-			Rectangle2D.Double(0.0, 0.0, width.toDouble(), height.toDouble())
+			Rectangle2D.Double(x.toDouble(), y.toDouble(), width.toDouble(), height.toDouble())
 	
 	override fun getShape(): Shape {
 		if (onRender != renderEmpty) {
