@@ -1,6 +1,7 @@
 package com.brain.ion
 
 import com.brain.ion.graphics.IonGraphics
+import java.awt.Graphics2D
 import java.awt.event.WindowEvent
 import java.awt.image.BufferStrategy
 
@@ -12,7 +13,7 @@ class GameLoop(
 	private val canvas = mainFrame.canvas
 	private val mainThread = Thread(this)
 	private val bs: BufferStrategy
-	val graphics = IonGraphics(canvas.bounds)
+	val graphics: IonGraphics
 	
 	private var running = false
 
@@ -21,7 +22,7 @@ class GameLoop(
 		canvas.createBufferStrategy(2)
 		
 		bs = canvas.bufferStrategy
-		graphics.setGraphics(bs.drawGraphics)
+		graphics = IonGraphics(canvas.bounds, bs.drawGraphics as Graphics2D)
 		
 	}
 	
