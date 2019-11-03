@@ -5,21 +5,24 @@ import com.brain.ion.components.vectors.Vector
 import java.awt.*
 
 class IonGraphics(
-		private val bounds: Rectangle = Rectangle(0, 0, 0, 0)
+		private val bounds: Rectangle = Rectangle(0, 0, 0, 0),
+		g: Graphics2D = DummyGraphics2D()
 ) {
 	
 	val renderQueue: Group = GroupImpl(0, null)
+	val graphics: Graphics2D
+		get() = graphicsPrivate.create() as Graphics2D
 	
-	private lateinit var graphics: Graphics2D
+	private var graphicsPrivate: Graphics2D = g
 	
 	fun setGraphics(g: Graphics) {
-		graphics = g.create() as Graphics2D
+		graphicsPrivate = g.create() as Graphics2D
 		
-		graphics.color = Color.DARK_GRAY
-		graphics.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
-		graphics.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
+		graphicsPrivate.color = Color.DARK_GRAY
+		graphicsPrivate.setClip(bounds.x, bounds.y, bounds.width, bounds.height)
+		graphicsPrivate.fillRect(bounds.x, bounds.y, bounds.width, bounds.height)
 		
-		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+		graphicsPrivate.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
 	}
 	
 	private operator fun Number.plus(i: Number): Number {
@@ -48,19 +51,19 @@ class IonGraphics(
 	
 	private fun draw(vector: Vector, x: Number = 0, y: Number = 0) {
 		
-		val g = graphics.create() as Graphics2D
-		g.translate(x.toDouble() + vector.x.toDouble(), y.toDouble() + vector.y.toDouble())
+		val graphics = graphics
+		graphics.translate(x.toDouble() + vector.x.toDouble(), y.toDouble() + vector.y.toDouble())
 
-		g.color = vector.style.fillColor
-		g.fill(vector.getShape())
+		graphics.color = vector.style.fillColor
+		graphics.fill(vector.getShape())
 
-		g.color = vector.style.strokeColor
-		g.stroke = vector.style.strokeProp
+		graphics.color = vector.style.strokeColor
+		graphics.stroke = vector.style.strokeProp
 
 		if(vector.style.strokeProp.lineWidth % 2 == 0f) {
-			g.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+			graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 		}
-		g.draw(vector.getShape())
+		graphics.draw(vector.getShape())
 		
 	}
 	
@@ -70,7 +73,7 @@ class IonGraphics(
 	
 	private class GroupImpl(
 			override val index: Int,
-			override val parent: Renderable,
+			override val parent: Renderable?,
 			private val queue: MutableList<Renderable> = mutableListOf()
 	): Group, MutableList<Renderable> by queue {
 		
