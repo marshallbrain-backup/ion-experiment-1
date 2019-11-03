@@ -6,7 +6,7 @@ import com.brain.ion.graphics.Renderable
 interface Component: Renderable {
 	
 	val id: String
-	val emptyFunction: (Component) -> Unit
+	val renderEmpty: (Component) -> Unit
 		get() = {}
 	
 	var visible: Boolean

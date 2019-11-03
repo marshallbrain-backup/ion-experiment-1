@@ -1,10 +1,6 @@
 package com.brain.ion.components
 
-import com.brain.ion.components.vectors.Vector
 import com.brain.ion.graphics.IonGraphics
-import com.brain.ion.properties.Clickable
-import java.awt.geom.Area
-import java.awt.geom.Point2D
 
 class Collection(
 		override val id: String,
@@ -14,7 +10,7 @@ class Collection(
 		override var visible: Boolean = true,
 		componentList: MutableList<Component> = mutableListOf(*components)
 ) : Component, MutableList<Component> by componentList{
-	override var onRender: (Component) -> Unit = emptyFunction
+	override var onRender: (Component) -> Unit = renderEmpty
 	
 	constructor(c: Collection): this(
 			c.id,
@@ -29,7 +25,7 @@ class Collection(
 	}
 	
 	override fun getCollection(graphics: IonGraphics): List<Component> {
-		if (onRender != emptyFunction) {
+		if (onRender != renderEmpty) {
 			onRender.invoke(this)
 		}
 		

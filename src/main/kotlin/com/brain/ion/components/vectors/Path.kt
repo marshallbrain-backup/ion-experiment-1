@@ -1,7 +1,6 @@
 package com.brain.ion.components.vectors
 
 import com.brain.ion.components.Component
-import com.brain.ion.graphics.IonGraphics
 import java.awt.Rectangle
 import java.awt.Shape
 import java.awt.geom.*
@@ -18,8 +17,8 @@ class Path(
 	
 	override var x: Number = 0
 	override var y: Number = 0
-	override var onRender: (Component) -> Unit = emptyFunction
-	override var onClick: (Point2D) -> Unit = {}
+	override var onRender: (Component) -> Unit = renderEmpty
+	override var onClick: (Point2D) -> Unit = clickEmpty
 	
 	constructor(id: String, style: Style, pathString: String): this(id, style) {
 		shape.cloneCoordList(constructPath(pathString))

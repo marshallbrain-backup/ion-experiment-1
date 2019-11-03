@@ -14,7 +14,7 @@ class Text(
 		override var visible: Boolean = true
 ) : Component {
 	
-	override var onRender: (Component) -> Unit = emptyFunction
+	override var onRender: (Component) -> Unit = renderEmpty
 	private var changed = false
 	var text = t.trim()
 		set(value) {

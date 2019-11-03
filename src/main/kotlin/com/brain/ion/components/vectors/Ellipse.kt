@@ -1,7 +1,6 @@
 package com.brain.ion.components.vectors
 
 import com.brain.ion.components.Component
-import com.brain.ion.graphics.IonGraphics
 import java.awt.Shape
 import java.awt.geom.Ellipse2D
 import java.awt.geom.Point2D
@@ -31,14 +30,14 @@ class Ellipse(
 			field = value
 		}
 	
-	override var onRender: (Component) -> Unit = emptyFunction
-	override var onClick: (Point2D) -> Unit = {}
+	override var onRender: (Component) -> Unit = renderEmpty
+	override var onClick: (Point2D) -> Unit = clickEmpty
 	private var changed = false
 	private var shape: Ellipse2D =
 			Ellipse2D.Double(0.0, 0.0, width.toDouble(), height.toDouble())
 	
 	override fun getShape(): Shape {
-		if (onRender != emptyFunction) {
+		if (onRender != renderEmpty) {
 			onRender.invoke(this)
 			changed = true
 		}
