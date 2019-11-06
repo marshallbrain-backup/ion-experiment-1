@@ -12,13 +12,16 @@ class Collection(
 ) : Component, MutableList<Component> by componentList{
 	override var onRender: (Component) -> Unit = renderEmpty
 	
-	constructor(c: Collection): this(
-			c.id,
-			*c.toTypedArray(),
-			x = c.x,
-			y = c.y,
-			visible = c.visible
-	)
+	constructor(collection: Collection): this(
+			collection.id,
+			x = collection.x,
+			y = collection.y,
+			visible = collection.visible
+	) {
+		for (c in collection) {
+			add(c.clone())
+		}
+	}
 	
 	fun addAll(vararg components: Component) {
 		addAll(components)
