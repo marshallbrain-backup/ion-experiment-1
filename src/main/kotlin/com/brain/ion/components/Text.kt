@@ -1,14 +1,10 @@
 package com.brain.ion.components
 
-import com.brain.ion.components.vectors.Path
 import com.brain.ion.components.vectors.Shape
 import com.brain.ion.components.vectors.Style
 import com.brain.ion.graphics.IonGraphics
 import java.awt.Font
 import java.awt.FontMetrics
-import java.awt.font.FontRenderContext
-import java.awt.font.TextLayout
-import java.awt.geom.AffineTransform
 
 
 class Text(
@@ -48,6 +44,18 @@ class Text(
 		this.verticalFormat = verticalFormat
 	}
 	
+	constructor(clone: Text): this(clone.id, clone.x, clone.y, clone.style){
+		onRender = clone.onRender
+		changed = true
+		visible = clone.visible
+		font = clone.font
+		maxTextWidth = clone.maxTextWidth
+		maxTextHeight = clone.maxTextHeight
+		verticalFormat = clone.verticalFormat
+		horizontalFormat = clone.horizontalFormat
+		text = clone.text
+	}
+	
 	private fun formatText(fm: FontMetrics) {
 	
 		val totalLength = fm.stringWidth(text)
@@ -55,7 +63,7 @@ class Text(
 	}
 	
 	override fun clone(): Component {
-		TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+		return Text(this)
 	}
 	
 	override fun getCollection(graphics: IonGraphics): List<Component> {
